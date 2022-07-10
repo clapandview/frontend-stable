@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:io' show Platform;
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class CustomButton extends StatelessWidget {
   const CustomButton({
     Key? key,
@@ -61,9 +63,9 @@ class CustomButton extends StatelessWidget {
               : AutoSizeText(
                   text,
                   maxLines: 1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18.0,
+                    fontSize: 18.sp,
                     fontFamily: "SFProDisplaySemibold",
                   ),
                 ),

@@ -8,6 +8,7 @@ import 'package:clap_and_view/frontend/pages/home/search.dart';
 import 'package:clap_and_view/frontend/pages/home/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -86,9 +87,9 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       height: kBottomNavigationBarHeight,
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
+                      padding: EdgeInsets.only(
+                        left: 15.r,
+                        right: 15.r,
                       ),
                       color: (selectedIndex == pages.length - 1)
                           ? Colors.white
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.transparent,
                                 height: kBottomNavigationBarHeight,
                                 width:
-                                    (MediaQuery.of(context).size.width - 30.0) /
+                                    (MediaQuery.of(context).size.width - 30.r) /
                                         pages.length,
                                 child: (selectedIndex == pages.length - 1)
                                     ? (selectedIndex == index)

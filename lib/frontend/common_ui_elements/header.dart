@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -20,8 +21,8 @@ class Header extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         (isSettings)
-            ? const SizedBox(
-                height: 20.0,
+            ? SizedBox(
+                height: 20.r,
               )
             : SizedBox(
                 height: kToolbarHeight * 2,
@@ -30,26 +31,26 @@ class Header extends StatelessWidget {
         AutoSizeText(
           AppLocalizations.of(context)!.translate(title),
           maxLines: 2,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.black,
-            fontSize: 36.0,
+            fontSize: 36.sp,
             fontFamily: "SFProDisplaySemibold",
           ),
         ),
-        const SizedBox(
-          height: 20.0,
+        SizedBox(
+          height: 20.r,
         ),
         AutoSizeText(
           AppLocalizations.of(context)!.translate(subtitle),
           maxLines: 2,
           style: TextStyle(
             color: Colors.black.withOpacity(0.5),
-            fontSize: 18.0,
+            fontSize: 18.sp,
             fontFamily: "SFProDisplayMedium",
           ),
         ),
-        const SizedBox(
-          height: 40.0,
+        SizedBox(
+          height: 40.r,
         ),
       ],
     );

@@ -4,6 +4,7 @@ import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 
 class StreamCard extends StatefulWidget {
@@ -42,7 +43,7 @@ class _StreamCardState extends State<StreamCard>
             },
           ),
           Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.r),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -55,11 +56,11 @@ class _StreamCardState extends State<StreamCard>
             ),
             child: Row(
               children: [
-                const DecoratedIcon(
+                DecoratedIcon(
                   ClapAndViewIcons.users_alt,
-                  size: 22.0,
+                  size: 22.r,
                   color: Colors.white,
-                  shadows: <Shadow>[
+                  shadows: const <Shadow>[
                     Shadow(
                       offset: Offset(0.0, 0.0),
                       blurRadius: 16.0,
@@ -67,17 +68,17 @@ class _StreamCardState extends State<StreamCard>
                     ),
                   ],
                 ),
-                const SizedBox(
-                  width: 5.0,
+                SizedBox(
+                  width: 5.r,
                 ),
                 AutoSizeText(
                   widget.viewsCount.toString(),
                   maxLines: 1,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16.0,
+                    fontSize: 16.sp,
                     fontFamily: "SFProDisplayMedium",
-                    shadows: <Shadow>[
+                    shadows: const <Shadow>[
                       Shadow(
                         offset: Offset(0.0, 0.0),
                         blurRadius: 16.0,
@@ -94,11 +95,11 @@ class _StreamCardState extends State<StreamCard>
             right: 0.0,
             bottom: 0.0,
             child: Container(
-              padding: const EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
-                bottom: 20.0,
-                top: 10.0,
+              padding: EdgeInsets.only(
+                left: 10.r,
+                right: 10.r,
+                bottom: 20.r,
+                top: 10.r,
               ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -117,11 +118,11 @@ class _StreamCardState extends State<StreamCard>
                   AutoSizeText(
                     widget.title,
                     maxLines: 1,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.0,
+                      fontSize: 18.sp,
                       fontFamily: "SFProDisplaySemibold",
-                      shadows: <Shadow>[
+                      shadows: const <Shadow>[
                         Shadow(
                           offset: Offset(0.0, 0.0),
                           blurRadius: 16.0,
@@ -130,15 +131,15 @@ class _StreamCardState extends State<StreamCard>
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 5.0,
+                  SizedBox(
+                    height: 5.r,
                   ),
                   AutoSizeText(
                     widget.name,
                     maxLines: 1,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.75),
-                      fontSize: 16.0,
+                      color: Colors.white.withOpacity(0.85),
+                      fontSize: 16.sp,
                       fontFamily: "SFProDisplayMedium",
                       shadows: const <Shadow>[
                         Shadow(

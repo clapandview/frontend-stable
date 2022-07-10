@@ -6,6 +6,7 @@ import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:clap_and_view/frontend/widgets/user/user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -41,9 +42,9 @@ class _SearchPageState extends State<SearchPage> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.only(
-            left: 20.0,
-            right: 20.0,
+          padding: EdgeInsets.only(
+            left: 20.r,
+            right: 20.r,
           ),
           height: kToolbarHeight,
           child: Center(
@@ -87,9 +88,9 @@ class _SearchPageState extends State<SearchPage> {
                   keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(
-                    left: 20.0,
-                    right: 20.0,
+                  padding: EdgeInsets.only(
+                    left: 20.r,
+                    right: 20.r,
                   ),
                   itemCount: provider.users.length,
                   itemBuilder: (context, index) {

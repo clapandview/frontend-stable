@@ -3,6 +3,7 @@ import 'package:clap_and_view/client/models/category.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
@@ -17,9 +18,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(
-        left: 15.0,
-        right: 15.0,
+      padding: EdgeInsets.only(
+        left: 15.r,
+        right: 15.r,
       ),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
@@ -35,7 +36,7 @@ class CategoryCard extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(
             color: (isSelected) ? Colors.white : lightGreyColor,
-            fontSize: 18.0,
+            fontSize: 18.sp,
             fontFamily:
                 (isSelected) ? "SFProDisplaySemibold" : "SFProDisplayMedium",
           ),

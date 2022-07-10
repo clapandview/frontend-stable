@@ -2,6 +2,7 @@ import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'category_card.dart';
 
@@ -18,18 +19,18 @@ class CategoryList extends StatelessWidget {
 
         return ListView.separated(
           physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.only(
-            left: 20.0,
-            right: 20.0,
-            top: 10.0,
-            bottom: 10.0,
+          padding: EdgeInsets.only(
+            left: 20.r,
+            right: 20.r,
+            top: 10.r,
+            bottom: 10.r,
           ),
           scrollDirection: Axis.horizontal,
           itemCount: Provider.of<CategoryController>(context, listen: false)
               .categories
               .length,
-          separatorBuilder: (BuildContext context, int index) => const SizedBox(
-            width: 5.0,
+          separatorBuilder: (BuildContext context, int index) => SizedBox(
+            width: 5.r,
           ),
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(

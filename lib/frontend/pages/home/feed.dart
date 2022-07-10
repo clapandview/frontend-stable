@@ -9,6 +9,7 @@ import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -46,9 +47,9 @@ class _FeedPageState extends State<FeedPage> {
       children: [
         AnimatedContainer(
           height: (hide) ? 0.0 : kToolbarHeight,
-          padding: const EdgeInsets.only(
-            left: 20.0,
-            right: 20.0,
+          padding: EdgeInsets.only(
+            left: 20.r,
+            right: 20.r,
           ),
           duration: const Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -132,16 +133,16 @@ class _FeedPageState extends State<FeedPage> {
                     physics: const BouncingScrollPhysics(),
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
-                    padding: const EdgeInsets.only(
-                      top: 5.0,
-                      left: 20.0,
-                      right: 20.0,
+                    padding: EdgeInsets.only(
+                      top: 5.r,
+                      left: 20.r,
+                      right: 20.r,
                     ),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent:
-                          (MediaQuery.of(context).size.width - 60.0) / 2,
-                      mainAxisSpacing: 20.0,
-                      crossAxisSpacing: 20.0,
+                          (MediaQuery.of(context).size.width - 60.r) / 2,
+                      mainAxisSpacing: 20.r,
+                      crossAxisSpacing: 20.r,
                       childAspectRatio: 0.75,
                     ),
                     itemCount: provider.streams.length,

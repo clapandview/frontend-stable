@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 
 class UserCard extends StatefulWidget {
@@ -31,7 +32,7 @@ class _UserCardState extends State<UserCard>
       onTap: widget.onTap,
       child: Container(
         color: Colors.transparent,
-        margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+        margin: EdgeInsets.only(top: 10.r, bottom: 10.r),
         child: Row(
           children: [
             ClipOval(
@@ -45,8 +46,8 @@ class _UserCardState extends State<UserCard>
                 },
               ),
             ),
-            const SizedBox(
-              width: 15.0,
+            SizedBox(
+              width: 15.r,
             ),
             Expanded(
               child: Column(
@@ -55,21 +56,21 @@ class _UserCardState extends State<UserCard>
                   AutoSizeText(
                     widget.name,
                     maxLines: 1,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.0,
+                      fontSize: 18.sp,
                       fontFamily: "SFProDisplaySemibold",
                     ),
                   ),
-                  const SizedBox(
-                    height: 2.0,
+                  SizedBox(
+                    height: 2.r,
                   ),
                   AutoSizeText(
                     widget.bio,
                     maxLines: 1,
                     style: TextStyle(
                       color: lightGreyColor,
-                      fontSize: 16.0,
+                      fontSize: 16.sp,
                       fontFamily: "SFProDisplayMedium",
                     ),
                   ),

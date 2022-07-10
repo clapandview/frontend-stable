@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:io' show Platform;
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton(
       {Key? key,
@@ -34,7 +36,7 @@ class CustomBackButton extends StatelessWidget {
             Icon(
               icon,
               color: color,
-              size: 28.0,
+              size: 28.r,
             ),
             (loading)
                 ? (Platform.isIOS)

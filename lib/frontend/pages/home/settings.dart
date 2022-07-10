@@ -8,6 +8,7 @@ import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -117,8 +118,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               letterSpacing: 0.0,
             ),
-            const SizedBox(
-              height: 20.0,
+            SizedBox(
+              height: 20.r,
             ),
             CustomTextField(
               controller: _controllerNickname,
@@ -140,8 +141,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               letterSpacing: 0.0,
             ),
-            const SizedBox(
-              height: 20.0,
+            SizedBox(
+              height: 20.r,
             ),
             CustomTextField(
               controller: _controllerLink,
@@ -161,8 +162,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               letterSpacing: 0.0,
             ),
-            const SizedBox(
-              height: 20.0,
+            SizedBox(
+              height: 20.r,
             ),
             CustomTextField(
               controller: _controllerBio,
@@ -182,8 +183,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               letterSpacing: 0.0,
             ),
-            const SizedBox(
-              height: 20.0,
+            SizedBox(
+              height: 20.r,
             ),
             CustomButton(
               onTap: () async {

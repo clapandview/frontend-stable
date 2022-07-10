@@ -1,6 +1,7 @@
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -47,7 +48,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       style: TextStyle(
-        fontSize: 18.0,
+        fontSize: 18.sp,
         letterSpacing: letterSpacing,
         fontFamily: "SFProDisplayMedium",
         color: colorTextMain,
@@ -89,7 +90,7 @@ class CustomTextField extends StatelessWidget {
         isCollapsed: true,
         hintText: text,
         hintStyle: TextStyle(
-          fontSize: 18.0,
+          fontSize: 18.sp,
           letterSpacing: letterSpacing,
           fontFamily: "SFProDisplayMedium",
           color: colorTextHover,
