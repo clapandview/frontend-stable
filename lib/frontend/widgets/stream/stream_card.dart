@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -98,7 +99,7 @@ class _StreamCardState extends State<StreamCard>
               padding: EdgeInsets.only(
                 left: 10.r,
                 right: 10.r,
-                bottom: 20.r,
+                bottom: kMainSpacing,
                 top: 10.r,
               ),
               decoration: BoxDecoration(

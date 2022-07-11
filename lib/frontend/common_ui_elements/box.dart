@@ -1,5 +1,5 @@
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Box extends StatelessWidget {
   const Box({
@@ -15,7 +15,7 @@ class Box extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: height,
-      padding: EdgeInsets.all(20.r),
+      padding: EdgeInsets.all(kMainSpacing),
       child: child,
     );
   }

@@ -1,6 +1,7 @@
 import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,8 @@ class CategoryList extends StatelessWidget {
         return ListView.separated(
           physics: const BouncingScrollPhysics(),
           padding: EdgeInsets.only(
-            left: 20.r,
-            right: 20.r,
+            left: kMainSpacing,
+            right: kMainSpacing,
             top: 10.r,
             bottom: 10.r,
           ),

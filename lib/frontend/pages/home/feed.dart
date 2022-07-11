@@ -48,8 +48,8 @@ class _FeedPageState extends State<FeedPage> {
         AnimatedContainer(
           height: (hide) ? 0.0 : kToolbarHeight,
           padding: EdgeInsets.only(
-            left: 20.r,
-            right: 20.r,
+            left: kMainSpacing,
+            right: kMainSpacing,
           ),
           duration: const Duration(milliseconds: 500),
           curve: Curves.fastOutSlowIn,
@@ -135,14 +135,14 @@ class _FeedPageState extends State<FeedPage> {
                         ScrollViewKeyboardDismissBehavior.onDrag,
                     padding: EdgeInsets.only(
                       top: 5.r,
-                      left: 20.r,
-                      right: 20.r,
+                      left: kMainSpacing,
+                      right: kMainSpacing,
                     ),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent:
                           (MediaQuery.of(context).size.width - 60.r) / 2,
-                      mainAxisSpacing: 20.r,
-                      crossAxisSpacing: 20.r,
+                      mainAxisSpacing: kMainSpacing,
+                      crossAxisSpacing: kMainSpacing,
                       childAspectRatio: 0.75,
                     ),
                     itemCount: provider.streams.length,

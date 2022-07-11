@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class Header extends StatelessWidget {
       children: [
         (isSettings)
             ? SizedBox(
-                height: 20.r,
+                height: kMainSpacing,
               )
             : SizedBox(
                 height: kToolbarHeight * 2,
@@ -38,7 +39,7 @@ class Header extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 20.r,
+          height: kMainSpacing,
         ),
         AutoSizeText(
           AppLocalizations.of(context)!.translate(subtitle),
