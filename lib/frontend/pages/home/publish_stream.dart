@@ -2,6 +2,7 @@ import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
+import 'package:clap_and_view/frontend/pages/home/stream_settings.dart';
 import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
@@ -35,7 +36,11 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                 width: kMainSpacing,
               ),
               CustomCircleButton(
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(
+                  SlideRoute(
+                    page: const StreamSettings(),
+                  ),
+                ),
                 icon: ClapAndViewIcons.setting,
               ),
             ],

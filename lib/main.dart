@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.grey
           ),
           supportedLocales: const [
             Locale('en'),

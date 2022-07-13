@@ -64,6 +64,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
+              Expanded(
+                child: Container(),
+              ),
             ],
           ),
         ),
