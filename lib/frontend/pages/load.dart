@@ -1,4 +1,6 @@
+import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
@@ -46,12 +48,40 @@ class _LoadPageState extends State<LoadPage> {
       ),
     );
 
-     // ignore: use_build_context_synchronously
-     Navigator.of(context).pushReplacement(
-        FadeRoute(
-          page: const HomePage(),
-        ),
-      );
+    // ignore: use_build_context_synchronously
+    await Provider.of<BroadcastController>(context, listen: false).createOne(
+      StreamModel(
+        id: "",
+        user_id:
+            // ignore: use_build_context_synchronously
+            Provider.of<UserController>(context, listen: false).currentUser.id,
+        title: "",
+        // ignore: use_build_context_synchronously
+        author_name: Provider.of<UserController>(context, listen: false)
+            .currentUser
+            .name,
+        // ignore: use_build_context_synchronously
+        author_username: Provider.of<UserController>(context, listen: false)
+            .currentUser
+            .username,
+        hashtag_list: [],
+        description: "",
+        link: "",
+        thumbnail: "basic",
+        count: 0,
+        status: 1,
+        smart_score: 0.0,
+        restricted_phone_list: [],
+        restricted_country_list: [],
+      ),
+    );
+
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pushReplacement(
+      FadeRoute(
+        page: const HomePage(),
+      ),
+    );
   }
 
   @override

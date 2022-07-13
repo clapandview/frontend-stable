@@ -63,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             const Header(
               title: 'settings',
-              subtitle: 'settings_desc',
+              subtitle: 'here_you_can_change_personal_details',
               isSettings: true,
             ),
             Row(
@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
             CustomTextField(
               controller: _controllerName,
               keyboardType: TextInputType.name,
-              text: AppLocalizations.of(context)!.translate('name'),
+              text: AppLocalizations.of(context)!.translate('enter_your_name'),
               cap: TextCapitalization.words,
               maxLines: 1,
               minLines: 1,
@@ -123,7 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
             CustomTextField(
               controller: _controllerNickname,
               keyboardType: TextInputType.name,
-              text: AppLocalizations.of(context)!.translate('nickname'),
+              text: AppLocalizations.of(context)!.translate('enter_your_nickname'),
               cap: TextCapitalization.none,
               maxLines: 1,
               minLines: 1,
@@ -167,7 +167,7 @@ class _SettingsPageState extends State<SettingsPage> {
             CustomTextField(
               controller: _controllerBio,
               keyboardType: TextInputType.text,
-              text: AppLocalizations.of(context)!.translate('bio'),
+              text: AppLocalizations.of(context)!.translate('description'),
               cap: TextCapitalization.sentences,
               maxLines: 0,
               minLines: 2,

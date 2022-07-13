@@ -121,7 +121,7 @@ class _StreamCardState extends State<StreamCard>
                     maxLines: 1,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.sp,
+                      fontSize: kMainTxtSize,
                       fontFamily: "SFProDisplaySemibold",
                       shadows: const <Shadow>[
                         Shadow(

@@ -36,7 +36,7 @@ class CategoryCard extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(
             color: (isSelected) ? Colors.white : lightGreyColor,
-            fontSize: 18.sp,
+            fontSize: kMainTxtSize,
             fontFamily:
                 (isSelected) ? "SFProDisplaySemibold" : "SFProDisplayMedium",
           ),

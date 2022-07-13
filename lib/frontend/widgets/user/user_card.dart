@@ -58,7 +58,7 @@ class _UserCardState extends State<UserCard>
                     maxLines: 1,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.sp,
+                      fontSize: kMainTxtSize,
                       fontFamily: "SFProDisplaySemibold",
                     ),
                   ),

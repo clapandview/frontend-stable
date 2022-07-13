@@ -3,6 +3,8 @@ import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
+import 'package:clap_and_view/frontend/pages/home/profile.dart';
+import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/user/user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -98,7 +100,13 @@ class _SearchPageState extends State<SearchPage> {
                           "${baseUrl}user/DownloadProfilePic/${provider.users[index].profile_pic}",
                       name: provider.users[index].name,
                       bio: provider.users[index].username,
-                      onTap: () {},
+                      onTap: () => Navigator.of(context).push(
+                        SlideRoute(
+                          page: ProfilePage(
+                            user: provider.users[index],
+                          ),
+                        ),
+                      ),
                     );
                   },
                 ),

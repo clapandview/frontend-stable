@@ -4,6 +4,7 @@ import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/home/feed.dart';
+import 'package:clap_and_view/frontend/pages/home/publish_stream.dart';
 import 'package:clap_and_view/frontend/pages/home/search.dart';
 import 'package:clap_and_view/frontend/pages/home/settings.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   late List<Widget> pages = [
     const FeedPage(),
     const SearchPage(),
-    Container(),
+    const PublishStreamPage(),
     const SettingsPage(),
   ];
 

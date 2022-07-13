@@ -8,4 +8,6 @@ Color darkGreyColor = const Color.fromRGBO(53, 52, 58, 1);
 Color lightGreyColor = const Color.fromRGBO(166, 166, 166, 1);
 Color lighterGreyColor = const Color.fromRGBO(236, 235, 237, 1);
 
+// Const UI values
 double kMainSpacing = 20.r;
+double kMainTxtSize = 18.sp;

@@ -46,7 +46,7 @@ class Header extends StatelessWidget {
           maxLines: 2,
           style: TextStyle(
             color: Colors.black.withOpacity(0.5),
-            fontSize: 18.sp,
+            fontSize: kMainTxtSize,
             fontFamily: "SFProDisplayMedium",
           ),
         ),
