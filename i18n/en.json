@@ -25,5 +25,10 @@
     "subscriptions": "Subscriptions",
     "i_already_have_an_account": "I already have an account",
     "stream_title": "Stream title",
-    "stream_settings": "Stream settings"
+    "stream_settings": "Stream settings",
+    "follow": "follow",
+    "following": "following",
+    "followers": "followers",
+    "bobliers": "bobliers",
+    "live_now": "LIVE NOW"
 }

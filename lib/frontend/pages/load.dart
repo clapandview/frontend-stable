@@ -43,7 +43,7 @@ class _LoadPageState extends State<LoadPage> {
         gender: "",
         gender_preference: [],
         datetime_registration: DateTime.now().toString(),
-        balance: "",
+        balance: 0,
         email: "",
       ),
     );

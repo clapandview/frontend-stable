@@ -25,5 +25,10 @@
     "subscriptions": "Подписки",
     "i_already_have_an_account": "У меня уже есть аккаунт",
     "stream_title": "Название трансляции",
-    "stream_settings": "Настройки трансляции"
+    "stream_settings": "Настройки трансляции",
+    "follow": "подписатья",
+    "following": "подписки",
+    "followers": "подписчики",
+    "bobliers": "боблеры",
+    "live_now": "LIVE NOW"
 }
