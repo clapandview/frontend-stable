@@ -43,7 +43,7 @@ class BroadcastController extends ChangeNotifier {
 
       final streamData = data;
 
-      currentStream = StreamModel.fromJson(streamData);
+      return StreamModel.fromJson(streamData);
 
       notifyListeners();
     } catch (error) {
