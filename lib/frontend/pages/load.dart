@@ -29,7 +29,7 @@ class _LoadPageState extends State<LoadPage> {
     await Provider.of<UserController>(context, listen: false).auth(
       User(
         id: "",
-        phone: "77777777777",
+        phone: "79154803854",
         name: "",
         username: "",
         age: 0,
