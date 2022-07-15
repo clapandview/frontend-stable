@@ -258,17 +258,21 @@ class UserController extends ChangeNotifier {
 
   void updateName(String name) {
     currentUser.name = name;
+    notifyListeners();
   }
 
   void updateNickname(String nickname) {
     currentUser.username = nickname;
+    notifyListeners();
   }
 
   void updateBio(String bio) {
     currentUser.description = bio;
+    notifyListeners();
   }
 
   void updateLink(String link) {
     currentUser.link = link;
+    notifyListeners();
   }
 }

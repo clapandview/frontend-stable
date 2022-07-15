@@ -21,6 +21,7 @@ class StreamSettings extends StatefulWidget {
 }
 
 class _StreamSettingsState extends State<StreamSettings> {
+  bool loading = false;
   final ImagePicker _picker = ImagePicker();
   final TextEditingController _controllerTitle = TextEditingController();
   final TextEditingController _controllerDescription = TextEditingController();
@@ -169,6 +170,37 @@ class _StreamSettingsState extends State<StreamSettings> {
                         LengthLimitingTextInputFormatter(500),
                       ],
                       letterSpacing: 0.0,
+                    ),
+                    SizedBox(
+                      height: kMainSpacing,
+                    ),
+                    CustomButton(
+                      onTap: () async {
+                        setState(() {
+                          loading = !loading;
+                        });
+
+                        Provider.of<BroadcastController>(context, listen: false)
+                            .updateTitle(_controllerTitle.text);
+                        Provider.of<BroadcastController>(context, listen: false)
+                            .updateDescription(_controllerDescription.text);
+
+                        await Provider.of<BroadcastController>(context,
+                                listen: false)
+                            .updateStream(Provider.of<BroadcastController>(
+                                    context,
+                                    listen: false)
+                                .currentStream);
+                        setState(() {
+                          loading = !loading;
+                        });
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      text: AppLocalizations.of(context)!.translate('save'),
+                      height: kToolbarHeight / 1.2,
+                      width: MediaQuery.of(context).size.width,
+                      borderRadius: 15.0,
+                      loading: loading,
                     ),
                   ],
                 ),

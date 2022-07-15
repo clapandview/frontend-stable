@@ -24,7 +24,54 @@ class BroadcastController extends ChangeNotifier {
 
       currentStream = StreamModel.fromJson(streamData);
 
+      print(streamData);
+
       notifyListeners();
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
+  }
+
+  Future updateStream(StreamModel stream) async {
+    final token = GetStorage().read('token');
+
+    try {
+      final streamsData = (await CustomDio(token).send(
+        reqMethod: "post",
+        path: "stream/Update",
+        body: stream.toJson(stream),
+      ))
+          .data;
+
+      if (kDebugMode) {
+        print(streamsData);
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
+  }
+
+  Future updateStatus(StreamModel stream) async {
+    final token = GetStorage().read('token');
+
+    try {
+      final streamsData = (await CustomDio(token).send(
+        reqMethod: "post",
+        path: "stream/UpdateStatus",
+        body: stream.toJson(stream),
+      ))
+          .data;
+
+      currentStream.status = stream.status;
+      notifyListeners();
+
+      if (kDebugMode) {
+        print(streamsData);
+      }
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -310,5 +357,15 @@ class BroadcastController extends ChangeNotifier {
         print(error);
       }
     }
+  }
+
+  void updateTitle(String title) {
+    currentStream.title = title;
+    notifyListeners();
+  }
+
+  void updateDescription(String description) {
+    currentStream.description = description;
+    notifyListeners();
   }
 }

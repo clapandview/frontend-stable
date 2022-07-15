@@ -18,6 +18,8 @@ class PublishStreamPage extends StatefulWidget {
 }
 
 class _PublishStreamPageState extends State<PublishStreamPage> {
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -51,21 +53,40 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
           left: kMainSpacing,
           right: kMainSpacing,
           child: CustomButton(
-            onTap: () => Navigator.of(context).push(
-              SlideRoute(
-                page: WatchStreamPage(
-                  id: Provider.of<BroadcastController>(context, listen: false)
-                      .currentStream
-                      .id,
-                  isPublisher: true,
+            onTap: () async {
+              setState(() {
+                loading = !loading;
+              });
+
+              Provider.of<BroadcastController>(context, listen: false)
+                  .currentStream
+                  .status = 2;
+
+              await Provider.of<BroadcastController>(context, listen: false)
+                  .updateStatus(
+                      Provider.of<BroadcastController>(context, listen: false)
+                          .currentStream);
+              setState(() {
+                loading = !loading;
+              });
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).push(
+                SlideRoute(
+                  page: WatchStreamPage(
+                    // ignore: use_build_context_synchronously
+                    id: Provider.of<BroadcastController>(context, listen: false)
+                        .currentStream
+                        .id,
+                    isPublisher: true,
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
             text: AppLocalizations.of(context)!.translate('start_broadcast'),
             height: kToolbarHeight / 1.2,
             width: MediaQuery.of(context).size.width,
             borderRadius: 15.0,
-            loading: false,
+            loading: loading,
           ),
         ),
       ],

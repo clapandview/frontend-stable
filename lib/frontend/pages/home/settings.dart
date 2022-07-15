@@ -207,6 +207,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 setState(() {
                   loading = !loading;
                 });
+                FocusManager.instance.primaryFocus?.unfocus();
               },
               text: AppLocalizations.of(context)!.translate('save'),
               height: kToolbarHeight / 1.2,
