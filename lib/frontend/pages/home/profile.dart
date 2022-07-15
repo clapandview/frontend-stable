@@ -31,9 +31,11 @@ class _ProfilePageState extends State<ProfilePage> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   User? user = null;
+  bool isFollowing = false;
 
   @override
   void initState() {
+    checkIfFollowing();
     super.initState();
   }
 
@@ -98,8 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             ClipOval(
                               child: CachedNetworkImage(
-                                width: kToolbarHeight * 3,
-                                height: kToolbarHeight * 3,
+                                width: kToolbarHeight * 2.5,
+                                height: kToolbarHeight * 2.5,
                                 fit: BoxFit.cover,
                                 imageUrl:
                                     "${baseUrl}user/DownloadProfilePic/${user!.profile_pic}",
@@ -138,29 +140,53 @@ class _ProfilePageState extends State<ProfilePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                GestureDetector(
-                                  onTap: () => Navigator.of(context).pop(),
-                                  child: Container(
-                                    height: 32.w,
-                                    width: 80.w,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: lighterGreyColor,
-                                        borderRadius:
-                                            BorderRadius.circular(12.r)),
-                                    child: AutoSizeText(
-                                      AppLocalizations.of(context)!
-                                          .translate('follow'),
-                                      maxLines: 1,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: accentColorTwo,
-                                        fontSize: 25.sp,
-                                        fontFamily: "SFProDisplayMedium",
+                                (isFollowing)
+                                    ? GestureDetector(
+                                        onTap: () => unfollow(),
+                                        child: Container(
+                                          height: 32.w,
+                                          width: 110.w,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: accentColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r)),
+                                          child: AutoSizeText(
+                                            AppLocalizations.of(context)!
+                                                .translate('following'),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: lighterGreyColor,
+                                              fontSize: 25.sp,
+                                              fontFamily: "SFProDisplayMedium",
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => follow(),
+                                        child: Container(
+                                          height: 32.w,
+                                          width: 80.w,
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              color: lighterGreyColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r)),
+                                          child: AutoSizeText(
+                                            AppLocalizations.of(context)!
+                                                .translate('follow'),
+                                            maxLines: 1,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: accentColor,
+                                              fontSize: 25.sp,
+                                              fontFamily: "SFProDisplayMedium",
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
                                 SizedBox(width: 5.w),
                                 GestureDetector(
                                   onTap: () => Navigator.of(context).pop(),
@@ -174,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             BorderRadius.circular(12.r)),
                                     child: Icon(
                                       ClapAndViewIcons.message_45,
-                                      color: accentColorTwo,
+                                      color: accentColor,
                                     ),
                                   ),
                                 ),
@@ -303,11 +329,44 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  void follow() {
+    Provider.of<UserController>(context, listen: false).follow(
+        Provider.of<UserController>(context, listen: false).currentUser.id,
+        widget.user_id);
+    user!.followers_count += 1;
+    setState(() {
+      isFollowing = true;
+      user = user;
+    });
+  }
+
+  void unfollow() {
+    Provider.of<UserController>(context, listen: false).unfollow(
+        Provider.of<UserController>(context, listen: false).currentUser.id,
+        widget.user_id);
+    user!.followers_count -= 1;
+    setState(() {
+      isFollowing = false;
+      user = user;
+    });
+  }
+
   void loadUser() async {
     var cur_user = await Provider.of<UserController>(context, listen: false)
         .getOne(widget.user_id);
     setState(() {
       user = cur_user;
+    });
+  }
+
+  void checkIfFollowing() {
+    Provider.of<UserController>(context, listen: false)
+        .currentUser
+        .following
+        .forEach((currentUserId) {
+      if (currentUserId == widget.user_id) {
+        isFollowing = true;
+      }
     });
   }
 
