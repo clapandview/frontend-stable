@@ -24,8 +24,6 @@ class BroadcastController extends ChangeNotifier {
 
       currentStream = StreamModel.fromJson(streamData);
 
-      print(streamData);
-
       notifyListeners();
     } catch (error) {
       if (kDebugMode) {
@@ -67,6 +65,7 @@ class BroadcastController extends ChangeNotifier {
           .data;
 
       currentStream.status = stream.status;
+
       notifyListeners();
 
       if (kDebugMode) {
@@ -91,8 +90,6 @@ class BroadcastController extends ChangeNotifier {
       final streamData = data;
 
       return StreamModel.fromJson(streamData);
-
-      notifyListeners();
     } catch (error) {
       if (kDebugMode) {
         print(error);
