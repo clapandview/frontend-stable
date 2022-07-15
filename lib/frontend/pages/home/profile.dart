@@ -370,7 +370,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           : Container(),
                     ],
                   )
-                : const CircularProgressIndicator(),
+                : Center(
+                    widthFactor: 30.w,
+                    heightFactor: 30.w,
+                    child: const CircularProgressIndicator()),
           ),
         ),
       ),
