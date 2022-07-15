@@ -20,7 +20,7 @@ class User {
   List gender_preference;
   // ignore: non_constant_identifier_names
   String datetime_registration;
-  String balance;
+  int balance;
   String email;
 
   User({

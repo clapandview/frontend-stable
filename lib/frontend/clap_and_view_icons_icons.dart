@@ -35,4 +35,5 @@ class ClapAndViewIcons {
   static const IconData comment = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   // ignore: constant_identifier_names
   static const IconData angle_left_no_space = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData message_45 = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

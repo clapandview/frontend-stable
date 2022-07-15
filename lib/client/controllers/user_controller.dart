@@ -9,8 +9,10 @@ class UserController extends ChangeNotifier {
   List<User> users = [];
   int page = 0;
   int limit = 10;
+
   // ignore: non_constant_identifier_names
   List<User> following_users = [];
+
   // ignore: non_constant_identifier_names
   Map<String, User> map_users = {};
 
@@ -244,7 +246,7 @@ class UserController extends ChangeNotifier {
       //  ОПТИМИЗИРОВАТЬ ПОТОМ
       current_users = usersData.map((d) => User.fromJson(d)).toList();
       // ignore: avoid_function_literals_in_foreach_calls
-      current_users.forEach((user){
+      current_users.forEach((user) {
         map_users[user.id] = user;
       });
       notifyListeners();
@@ -255,6 +257,31 @@ class UserController extends ChangeNotifier {
     }
   }
 
+  Future follow(String follower_id, String following_id) async {
+    _followOrUnfollow(follower_id, following_id, true);
+  }
+
+  Future unfollow(String follower_id, String following_id) async {
+    _followOrUnfollow(follower_id, following_id, false);
+  }
+
+  Future _followOrUnfollow(String follower_id, String following_id, bool isFollowing) async {
+    try {
+      final token = GetStorage().read('token');
+
+      final data = (await CustomDio(token).send(
+        reqMethod: "post",
+        path: "user/${isFollowing ? 'Follow' : 'Unfollow'}",
+        body: {"follower_id": follower_id, "following_id": following_id},
+      ))
+          .data;
+      notifyListeners();
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
+  }
 
   void updateName(String name) {
     currentUser.name = name;
