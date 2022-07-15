@@ -257,25 +257,24 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  Future follow(String follower_id, String following_id) async {
-    _followOrUnfollow(follower_id, following_id, true);
+  Future follow(String followerId, String followingId) async {
+    _followOrUnfollow(followerId, followingId, true);
   }
 
-  Future unfollow(String follower_id, String following_id) async {
-    _followOrUnfollow(follower_id, following_id, false);
+  Future unfollow(String followerId, String followingId) async {
+    _followOrUnfollow(followerId, followingId, false);
   }
 
-  Future _followOrUnfollow(String follower_id, String following_id, bool isFollowing) async {
+  Future _followOrUnfollow(
+      String followerId, String followingId, bool isFollowing) async {
     try {
       final token = GetStorage().read('token');
 
-      final data = (await CustomDio(token).send(
+      await CustomDio(token).send(
         reqMethod: "post",
         path: "user/${isFollowing ? 'Follow' : 'Unfollow'}",
-        body: {"follower_id": follower_id, "following_id": following_id},
-      ))
-          .data;
-      notifyListeners();
+        body: {"follower_id": followerId, "following_id": followingId},
+      );
     } catch (error) {
       if (kDebugMode) {
         print(error);
