@@ -166,9 +166,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: lighterGreyColor,
-                                                fontSize: 25.sp,
+                                                fontSize: 22.sp,
                                                 fontFamily:
-                                                    "SFProDisplayMedium",
+                                                    "SFProDisplaySemiBold",
                                               ),
                                             ),
                                           ),
@@ -191,9 +191,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: accentColor,
-                                                fontSize: 25.sp,
+                                                fontSize: 22.sp,
                                                 fontFamily:
-                                                    "SFProDisplayMedium",
+                                                    "SFProDisplaySemiBold",
                                               ),
                                             ),
                                           ),
@@ -370,7 +370,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           : Container(),
                     ],
                   )
-                : const CircularProgressIndicator(),
+                : Center(
+                    widthFactor: 30.w,
+                    heightFactor: 30.w,
+                    child: const CircularProgressIndicator()),
           ),
         ),
       ),
