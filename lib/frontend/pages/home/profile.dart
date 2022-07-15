@@ -22,10 +22,10 @@ import '../../logic/app_localizations.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
     Key? key,
-    required this.user_id,
+    required this.userId,
   }) : super(key: key);
 
-  final String user_id;
+  final String userId;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -380,7 +380,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void follow() {
     Provider.of<UserController>(context, listen: false).follow(
         Provider.of<UserController>(context, listen: false).currentUser.id,
-        widget.user_id);
+        widget.userId);
     user!.followers_count += 1;
     setState(() {
       isFollowing = true;
@@ -391,7 +391,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void unfollow() {
     Provider.of<UserController>(context, listen: false).unfollow(
         Provider.of<UserController>(context, listen: false).currentUser.id,
-        widget.user_id);
+        widget.userId);
     user!.followers_count -= 1;
     setState(() {
       isFollowing = false;
@@ -401,11 +401,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void loadData() async {
     var curUser = await Provider.of<UserController>(context, listen: false)
-        .getOne(widget.user_id);
+        .getOne(widget.userId);
     var curStream =
         // ignore: use_build_context_synchronously
         await Provider.of<BroadcastController>(context, listen: false)
-            .getOneByUserId(widget.user_id);
+            .getOneByUserId(widget.userId);
     setState(() {
       user = curUser;
       stream = curStream;
@@ -417,7 +417,7 @@ class _ProfilePageState extends State<ProfilePage> {
         .currentUser
         .following
         .forEach((currentUserId) {
-      if (currentUserId == widget.user_id) {
+      if (currentUserId == widget.userId) {
         isFollowing = true;
       }
     });

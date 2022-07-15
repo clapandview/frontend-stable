@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> {
                       onTap: () => Navigator.of(context).push(
                         SlideRoute(
                           page: ProfilePage(
-                            user_id: provider.users[index].id,
+                            userId: provider.users[index].id,
                           ),
                         ),
                       ),
