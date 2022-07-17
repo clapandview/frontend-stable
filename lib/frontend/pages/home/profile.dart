@@ -1,11 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clap_and_view/client/controllers/stream_controller.dart';
+import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/models/user.dart';
+import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
+import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/stream/stream_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -14,10 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../client/controllers/stream_controller.dart';
-import '../../../client/controllers/user_controller.dart';
-import '../../../client/utils/config.dart';
-import '../../logic/app_localizations.dart';
+import 'dart:io' show Platform;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
@@ -64,10 +66,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Container(
                           decoration: BoxDecoration(
-                              color: darkGreyColor,
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(35.r),
-                                  bottomRight: Radius.circular(35.r))),
+                            color: darkGreyColor,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(35.r),
+                              bottomRight: Radius.circular(35.r),
+                            ),
+                          ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -107,8 +111,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               ClipOval(
                                 child: CachedNetworkImage(
-                                  width: kToolbarHeight * 2.5,
-                                  height: kToolbarHeight * 2.5,
+                                  width: kToolbarHeight * 2.0,
+                                  height: kToolbarHeight * 2.0,
                                   fit: BoxFit.cover,
                                   imageUrl:
                                       "${baseUrl}user/DownloadProfilePic/${user!.profile_pic}",
@@ -118,7 +122,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   },
                                 ),
                               ),
-                              SizedBox(height: 10.w),
+                              SizedBox(
+                                height: 10.w,
+                              ),
                               AutoSizeText(
                                 "@${user!.username}",
                                 maxLines: 1,
@@ -128,7 +134,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontFamily: "SFProDisplayMedium",
                                 ),
                               ),
-                              SizedBox(height: 10.w),
+                              SizedBox(
+                                height: 10.w,
+                              ),
                               Container(
                                 width: 0.75.sw,
                                 alignment: Alignment.center,
@@ -136,6 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   user!.description,
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: lighterGreyColor,
                                     fontSize: kMainTxtSize,
@@ -143,7 +152,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10.w),
+                              SizedBox(
+                                height: 10.w,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -155,10 +166,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             width: 110.w,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                                color: accentColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        12.r)),
+                                              color: accentColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r),
+                                            ),
                                             child: AutoSizeText(
                                               AppLocalizations.of(context)!
                                                   .translate('following'),
@@ -166,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: lighterGreyColor,
-                                                fontSize: 22.sp,
+                                                fontSize: kMainSpacing,
                                                 fontFamily:
                                                     "SFProDisplaySemiBold",
                                               ),
@@ -180,10 +191,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             width: 80.w,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                                color: lighterGreyColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        12.r)),
+                                              color: lighterGreyColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12.r),
+                                            ),
                                             child: AutoSizeText(
                                               AppLocalizations.of(context)!
                                                   .translate('follow'),
@@ -191,14 +202,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 color: accentColor,
-                                                fontSize: 22.sp,
+                                                fontSize: kMainSpacing,
                                                 fontFamily:
                                                     "SFProDisplaySemiBold",
                                               ),
                                             ),
                                           ),
                                         ),
-                                  SizedBox(width: 5.w),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
                                   GestureDetector(
                                     onTap: () => Navigator.of(context).pop(),
                                     child: Container(
@@ -217,7 +230,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10.w),
+                              SizedBox(
+                                height: 10.w,
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -230,7 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         maxLines: 1,
                                         style: TextStyle(
                                           color: lighterGreyColor,
-                                          fontSize: 25.sp,
+                                          fontSize: 22.sp,
                                           fontFamily: "SFProDisplayBold",
                                         ),
                                       ),
@@ -260,7 +275,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         maxLines: 1,
                                         style: TextStyle(
                                           color: lighterGreyColor,
-                                          fontSize: 25.sp,
+                                          fontSize: 22.sp,
                                           fontFamily: "SFProDisplayBold",
                                         ),
                                       ),
@@ -290,7 +305,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         maxLines: 1,
                                         style: TextStyle(
                                           color: lighterGreyColor,
-                                          fontSize: 25.sp,
+                                          fontSize: 22.sp,
                                           fontFamily: "SFProDisplayBold",
                                         ),
                                       ),
@@ -308,7 +323,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10.w),
+                              SizedBox(
+                                height: 10.w,
+                              ),
                               (stream != null && stream!.status == 2)
                                   ? Column(
                                       children: [
@@ -317,16 +334,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              width: 25.w,
-                                              height: 25.w,
+                                              width: 22.w,
+                                              height: 22.w,
                                               decoration: BoxDecoration(
-                                                  color: const Color.fromRGBO(
-                                                      255, 0, 0, 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10000.r)),
+                                                color: const Color.fromRGBO(
+                                                    255, 0, 0, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  10000.r,
+                                                ),
+                                              ),
                                             ),
-                                            SizedBox(width: 10.w),
+                                            SizedBox(
+                                              width: 10.w,
+                                            ),
                                             AutoSizeText(
                                               AppLocalizations.of(context)!
                                                   .translate('live_now'),
@@ -341,39 +362,54 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(height: 10.w),
+                                        SizedBox(
+                                          height: 10.w,
+                                        ),
                                       ],
                                     )
                                   : Container(),
                             ],
                           )),
-                      SizedBox(height: kMainSpacing),
+                      SizedBox(
+                        height: kMainSpacing,
+                      ),
                       (stream != null && stream!.status == 2)
                           ? SizedBox(
                               width: (1.sw - 60.w) / 2,
                               height: ((1.sw - 60.w) / 2) / 0.75,
                               child: GestureDetector(
-                                  onTap: () => Navigator.of(context).push(
-                                        SlideRoute(
-                                          page: WatchStreamPage(
-                                            id: stream!.id,
-                                            isPublisher: false,
-                                          ),
-                                        ),
-                                      ),
-                                  child: StreamCard(
-                                    thumb: stream!.thumbnail,
-                                    title: stream!.title,
-                                    name: stream!.author_name,
-                                    viewsCount: stream!.count,
-                                  )))
+                                onTap: () => Navigator.of(context).push(
+                                  SlideRoute(
+                                    page: WatchStreamPage(
+                                      id: stream!.id,
+                                    ),
+                                  ),
+                                ),
+                                child: StreamCard(
+                                  thumb: stream!.thumbnail,
+                                  title: stream!.title,
+                                  name: stream!.author_name,
+                                  viewsCount: stream!.count,
+                                ),
+                              ),
+                            )
                           : Container(),
                     ],
                   )
                 : Center(
-                    widthFactor: 30.w,
-                    heightFactor: 30.w,
-                    child: const CircularProgressIndicator()),
+                    child: (Platform.isIOS)
+                        ? const CupertinoActivityIndicator(
+                            color: Colors.white,
+                          )
+                        : const SizedBox(
+                            height: kToolbarHeight / 2.0,
+                            width: kToolbarHeight / 2.0,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.0,
+                            ),
+                          ),
+                  ),
           ),
         ),
       ),

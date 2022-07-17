@@ -66,7 +66,7 @@ class _FeedPageState extends State<FeedPage> {
                     maxLines: 1,
                     minLines: 1,
                     maxLength: 100,
-                    borderRadius: 15.0,
+                    borderRadius: 15.r,
                     colorTextMain: Colors.white,
                     colorTextHover: lightGreyColor,
                     colorMain: darkGreyColor,
@@ -154,7 +154,6 @@ class _FeedPageState extends State<FeedPage> {
                           SlideRoute(
                             page: WatchStreamPage(
                               id: provider.streams[index].id,
-                              isPublisher: false,
                             ),
                           ),
                         ),

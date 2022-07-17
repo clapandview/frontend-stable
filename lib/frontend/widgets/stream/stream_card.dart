@@ -32,7 +32,7 @@ class _StreamCardState extends State<StreamCard>
   Widget build(BuildContext context) {
     super.build(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
+      borderRadius: BorderRadius.circular(15.r),
       child: Stack(
         children: [
           CachedNetworkImage(

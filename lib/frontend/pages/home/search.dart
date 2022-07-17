@@ -8,6 +8,7 @@ import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/user/user_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -57,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
               maxLines: 1,
               minLines: 1,
               maxLength: 100,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               colorTextMain: Colors.white,
               colorTextHover: lightGreyColor,
               colorMain: darkGreyColor,

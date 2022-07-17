@@ -9,6 +9,7 @@ import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -121,7 +122,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                                 .translate('change'),
                             height: kToolbarHeight / 1.2,
                             width: MediaQuery.of(context).size.width,
-                            borderRadius: 15.0,
+                            borderRadius: 15.r,
                             loading: false,
                           ),
                         ),
@@ -139,7 +140,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                       maxLines: 1,
                       minLines: 1,
                       maxLength: 100,
-                      borderRadius: 15.0,
+                      borderRadius: 15.r,
                       colorTextMain: Colors.black,
                       colorTextHover: Colors.black.withOpacity(0.5),
                       colorMain: lighterGreyColor,
@@ -161,7 +162,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                       maxLines: 0,
                       minLines: 2,
                       maxLength: 500,
-                      borderRadius: 15.0,
+                      borderRadius: 15.r,
                       colorTextMain: Colors.black,
                       colorTextHover: Colors.black.withOpacity(0.5),
                       colorMain: lighterGreyColor,
@@ -199,7 +200,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                       text: AppLocalizations.of(context)!.translate('save'),
                       height: kToolbarHeight / 1.2,
                       width: MediaQuery.of(context).size.width,
-                      borderRadius: 15.0,
+                      borderRadius: 15.r,
                       loading: loading,
                     ),
                   ],

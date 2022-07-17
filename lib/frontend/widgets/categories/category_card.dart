@@ -23,8 +23,8 @@ class CategoryCard extends StatelessWidget {
         right: 15.r,
       ),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(30.0),
+        borderRadius: BorderRadius.all(
+          Radius.circular(10000.r),
         ),
         color: (isSelected) ? darkGreyColor : Colors.transparent,
       ),

@@ -52,9 +52,7 @@ class MyApp extends StatelessWidget {
           title: 'Clap And View',
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
-          theme: ThemeData(
-            primarySwatch: Colors.grey
-          ),
+          theme: ThemeData(primarySwatch: Colors.grey),
           supportedLocales: const [
             Locale('en'),
             Locale('ru'),

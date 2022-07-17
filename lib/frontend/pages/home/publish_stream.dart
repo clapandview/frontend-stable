@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -8,6 +9,7 @@ import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class PublishStreamPage extends StatefulWidget {
@@ -58,9 +60,18 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                 loading = !loading;
               });
 
-              Provider.of<BroadcastController>(context, listen: false)
-                  .currentStream
-                  .status = 2;
+              if (Provider.of<BroadcastController>(context, listen: false)
+                      .currentStream
+                      .status ==
+                  2) {
+                Provider.of<BroadcastController>(context, listen: false)
+                    .currentStream
+                    .status = 3;
+              } else {
+                Provider.of<BroadcastController>(context, listen: false)
+                    .currentStream
+                    .status = 2;
+              }
 
               await Provider.of<BroadcastController>(context, listen: false)
                   .updateStatus(
@@ -69,15 +80,12 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
               setState(() {
                 loading = !loading;
               });
-              // ignore: use_build_context_synchronously
               Navigator.of(context).push(
                 SlideRoute(
                   page: WatchStreamPage(
-                    // ignore: use_build_context_synchronously
                     id: Provider.of<BroadcastController>(context, listen: false)
                         .currentStream
                         .id,
-                    isPublisher: true,
                   ),
                 ),
               );
@@ -85,7 +93,7 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
             text: AppLocalizations.of(context)!.translate('start_broadcast'),
             height: kToolbarHeight / 1.2,
             width: MediaQuery.of(context).size.width,
-            borderRadius: 15.0,
+            borderRadius: 15.r,
             loading: loading,
           ),
         ),

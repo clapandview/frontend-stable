@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/stream.dart';
@@ -20,6 +23,11 @@ class _LoadPageState extends State<LoadPage> {
   @override
   void initState() {
     super.initState();
+    AntMediaFlutter.requestPermissions();
+
+    if (Platform.isAndroid) {
+      AntMediaFlutter.startForegroundService();
+    }
     loadApp();
   }
 

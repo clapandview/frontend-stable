@@ -8,6 +8,7 @@ import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(15.r),
                   child: CachedNetworkImage(
                     imageUrl:
                         "${baseUrl}user/DownloadProfilePic/${Provider.of<UserController>(context, listen: true).currentUser.profile_pic}",
@@ -90,7 +91,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     text: AppLocalizations.of(context)!.translate('change'),
                     height: kToolbarHeight / 1.2,
                     width: MediaQuery.of(context).size.width,
-                    borderRadius: 15.0,
+                    borderRadius: 15.r,
                     loading: false,
                   ),
                 ),
@@ -107,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
               maxLines: 1,
               minLines: 1,
               maxLength: 100,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               colorTextMain: Colors.black,
               colorTextHover: Colors.black.withOpacity(0.5),
               colorMain: lighterGreyColor,
@@ -128,7 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
               maxLines: 1,
               minLines: 1,
               maxLength: 100,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               colorTextMain: Colors.black,
               colorTextHover: Colors.black.withOpacity(0.5),
               colorMain: lighterGreyColor,
@@ -151,7 +152,7 @@ class _SettingsPageState extends State<SettingsPage> {
               maxLines: 1,
               minLines: 1,
               maxLength: 300,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               colorTextMain: Colors.black,
               colorTextHover: Colors.black.withOpacity(0.5),
               colorMain: lighterGreyColor,
@@ -172,7 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
               maxLines: 0,
               minLines: 2,
               maxLength: 500,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               colorTextMain: Colors.black,
               colorTextHover: Colors.black.withOpacity(0.5),
               colorMain: lighterGreyColor,
@@ -212,7 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
               text: AppLocalizations.of(context)!.translate('save'),
               height: kToolbarHeight / 1.2,
               width: MediaQuery.of(context).size.width,
-              borderRadius: 15.0,
+              borderRadius: 15.r,
               loading: loading,
             ),
           ],
