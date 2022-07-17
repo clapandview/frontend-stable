@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "725005020954",
+    "project_id": "clap-and-view-test",
+    "storage_bucket": "clap-and-view-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725005020954:android:43d265fdd81c470ab5c6a3",
+        "android_client_info": {
+          "package_name": "com.georgekobylyanskiy.clap_and_view"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725005020954-p8smh58m4qoqc798s2tp6lkb6hq9ll3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTZW0XZDZmQXhVghAPXWpbGkkz-QzbvjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725005020954-p8smh58m4qoqc798s2tp6lkb6hq9ll3s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "725005020954-7otua6b0avn09vt6i53sm5n70uk3t1ku.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kobylyanskiy.clapAndView"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725005020954:android:39b948a0c5e434f1b5c6a3",
+        "android_client_info": {
+          "package_name": "com.kobylyanskiy.clap_and_view"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725005020954-1h3die4juoh3deke76c14j81lq97p0u3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kobylyanskiy.clap_and_view",
+            "certificate_hash": "a023394026b1ed5d1e0be70d5678c00dcae7b030"
+          }
+        },
+        {
+          "client_id": "725005020954-p8smh58m4qoqc798s2tp6lkb6hq9ll3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTZW0XZDZmQXhVghAPXWpbGkkz-QzbvjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725005020954-p8smh58m4qoqc798s2tp6lkb6hq9ll3s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "725005020954-7otua6b0avn09vt6i53sm5n70uk3t1ku.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kobylyanskiy.clapAndView"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

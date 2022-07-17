@@ -153,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               SizedBox(
-                                height: 10.w,
+                                height: 15.w,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -219,9 +219,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 32.w,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                          color: lighterGreyColor,
-                                          borderRadius:
-                                              BorderRadius.circular(12.r)),
+                                        color: lighterGreyColor,
+                                        borderRadius:
+                                            BorderRadius.circular(12.r),
+                                      ),
                                       child: Icon(
                                         ClapAndViewIcons.message_45,
                                         color: accentColor,
@@ -231,7 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                               SizedBox(
-                                height: 10.w,
+                                height: 15.w,
                               ),
                               Row(
                                 mainAxisAlignment:
