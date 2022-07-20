@@ -48,11 +48,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     AntMediaFlutter.requestPermissions();
-
     if (Platform.isAndroid) {
       AntMediaFlutter.startForegroundService();
     }
-
     Provider.of<UserController>(context, listen: false).loadFirstPage();
     Provider.of<BroadcastController>(context, listen: false)
         .loadFirstPageSmart("", "");

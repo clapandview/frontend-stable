@@ -52,15 +52,16 @@ class _LoadPageState extends State<LoadPage> {
 
       isLoggedIn = true;
     }
-
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacement(
-      FadeRoute(
-        page: HomePage(
-          isLoggedIn: isLoggedIn,
+    Future.delayed(const Duration(milliseconds: 500), () {
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacement(
+        FadeRoute(
+          page: HomePage(
+            isLoggedIn: isLoggedIn,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   @override

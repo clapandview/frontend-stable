@@ -2,6 +2,7 @@ import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseDynamicListService {
@@ -65,11 +66,16 @@ class FirebaseDynamicListService {
       if (firstPathSegment == "tg-auth") {
         var parameters = deepLink.queryParameters;
         if (parameters["code"] == tgCode) {
-          /*Navigator.of(context).pushReplacement(
+          if (kDebugMode) {
+            print(parameters);
+          }
+          Navigator.of(context).pushReplacement(
             FadeRoute(
-              page: const HomePage(),
+              page: const HomePage(
+                isLoggedIn: true,
+              ),
             ),
-          );*/
+          );
         }
       }
     });
