@@ -113,6 +113,8 @@ class _AgePageState extends State<AgePage> {
                     height: kToolbarHeight / 1.2,
                     width: MediaQuery.of(context).size.width,
                     borderRadius: 15.r,
+                    color1: accentColor,
+                    color2: accentColorTwo,
                     loading: loading,
                   ),
                 ],

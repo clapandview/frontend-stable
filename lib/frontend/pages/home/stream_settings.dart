@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/utils/config.dart';
-import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
+import 'package:clap_and_view/frontend/widgets/buttons/back_button.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,17 +58,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Container(
-                        color: Colors.transparent,
-                        height: kToolbarHeight,
-                        width: kToolbarHeight,
-                        child: const Icon(
-                          ClapAndViewIcons.angle_left_no_space,
-                          color: Colors.black,
-                        ),
-                      ),
+                    const CustomBackButton(
+                      color: Colors.black,
                     ),
                     AutoSizeText(
                       AppLocalizations.of(context)!
@@ -123,6 +114,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                             height: kToolbarHeight / 1.2,
                             width: MediaQuery.of(context).size.width,
                             borderRadius: 15.r,
+                            color1: accentColor,
+                            color2: accentColorTwo,
                             loading: false,
                           ),
                         ),
@@ -201,6 +194,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                       height: kToolbarHeight / 1.2,
                       width: MediaQuery.of(context).size.width,
                       borderRadius: 15.r,
+                      color1: accentColor,
+                      color2: accentColorTwo,
                       loading: loading,
                     ),
                   ],

@@ -92,6 +92,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     height: kToolbarHeight / 1.2,
                     width: MediaQuery.of(context).size.width,
                     borderRadius: 15.r,
+                    color1: accentColor,
+                    color2: accentColorTwo,
                     loading: false,
                   ),
                 ),
@@ -124,7 +126,8 @@ class _SettingsPageState extends State<SettingsPage> {
             CustomTextField(
               controller: _controllerNickname,
               keyboardType: TextInputType.name,
-              text: AppLocalizations.of(context)!.translate('enter_your_nickname'),
+              text: AppLocalizations.of(context)!
+                  .translate('enter_your_nickname'),
               cap: TextCapitalization.none,
               maxLines: 1,
               minLines: 1,
@@ -214,6 +217,8 @@ class _SettingsPageState extends State<SettingsPage> {
               height: kToolbarHeight / 1.2,
               width: MediaQuery.of(context).size.width,
               borderRadius: 15.r,
+              color1: accentColor,
+              color2: accentColorTwo,
               loading: loading,
             ),
           ],

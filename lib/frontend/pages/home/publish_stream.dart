@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
+import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -41,6 +43,30 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
   initRenderers() async {
     await _localRenderer.initialize();
     await _remoteRenderer.initialize();
+
+    await Provider.of<BroadcastController>(context, listen: false).createOne(
+      StreamModel(
+        id: "",
+        user_id:
+            Provider.of<UserController>(context, listen: false).currentUser.id,
+        title: "",
+        author_name: Provider.of<UserController>(context, listen: false)
+            .currentUser
+            .name,
+        author_username: Provider.of<UserController>(context, listen: false)
+            .currentUser
+            .username,
+        hashtag_list: [],
+        description: "",
+        link: "",
+        thumbnail: "basic",
+        count: 0,
+        status: 1,
+        smart_score: 0.0,
+        restricted_phone_list: [],
+        restricted_country_list: [],
+      ),
+    );
   }
 
   @override
@@ -166,17 +192,20 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
     return OrientationBuilder(builder: (context, orientation) {
       return Stack(
         children: [
-          Positioned(
-            left: 0.0,
-            right: 0.0,
-            top: 0.0,
-            bottom: 0.0,
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(color: Colors.black54),
-              child: RTCVideoView(_remoteRenderer),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.r),
+            child: Positioned(
+              left: 0.0,
+              right: 0.0,
+              top: 0.0,
+              bottom: 0.0,
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(color: Colors.black54),
+                child: RTCVideoView(_remoteRenderer),
+              ),
             ),
           ),
           Positioned(
@@ -192,6 +221,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                             icon: _micOn
                                 ? ClapAndViewIcons.camera_change
                                 : ClapAndViewIcons.camera_change,
+                            color: Colors.black.withOpacity(0.75),
+                            colorIcon: Colors.white,
                           ),
                           SizedBox(
                             width: kMainSpacing,
@@ -199,6 +230,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                           CustomCircleButton(
                             onTap: () => _switchCamera(),
                             icon: ClapAndViewIcons.camera_change,
+                            color: Colors.black.withOpacity(0.75),
+                            colorIcon: Colors.white,
                           ),
                         ],
                       )
@@ -216,6 +249,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                     ),
                   ),
                   icon: ClapAndViewIcons.setting,
+                  color: Colors.black.withOpacity(0.75),
+                  colorIcon: Colors.white,
                 ),
               ],
             ),
@@ -264,6 +299,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
               height: kToolbarHeight / 1.2,
               width: MediaQuery.of(context).size.width,
               borderRadius: 15.r,
+              color1: accentColor,
+              color2: accentColorTwo,
               loading: loading,
             ),
           ),

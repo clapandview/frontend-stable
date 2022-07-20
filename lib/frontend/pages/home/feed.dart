@@ -3,8 +3,6 @@ import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
-import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
-import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/categories/category_list.dart';
 import 'package:clap_and_view/frontend/widgets/stream/stream_card.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
@@ -149,20 +147,8 @@ class _FeedPageState extends State<FeedPage> {
                     ),
                     itemCount: provider.streams.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          SlideRoute(
-                            page: WatchStreamPage(
-                              id: provider.streams[index].id,
-                            ),
-                          ),
-                        ),
-                        child: StreamCard(
-                          thumb: provider.streams[index].thumbnail,
-                          title: provider.streams[index].title,
-                          name: provider.streams[index].author_name,
-                          viewsCount: provider.streams[index].count,
-                        ),
+                      return StreamCard(
+                        streamModel: provider.streams[index],
                       );
                     },
                   ),

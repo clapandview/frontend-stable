@@ -7,8 +7,10 @@ import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
-import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
-import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
+import 'package:clap_and_view/frontend/masks/gradient_mask.dart';
+import 'package:clap_and_view/frontend/masks/gradient_text_mask.dart';
+import 'package:clap_and_view/frontend/widgets/buttons/back_button.dart';
+import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:clap_and_view/frontend/widgets/stream/stream_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,
         statusBarColor: darkGreyColor,
       ),
@@ -81,24 +83,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    GestureDetector(
-                                      onTap: () => Navigator.of(context).pop(),
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        height: kToolbarHeight,
-                                        width: kToolbarHeight,
-                                        child: Icon(
-                                          ClapAndViewIcons.angle_left_no_space,
-                                          color: lighterGreyColor,
-                                        ),
-                                      ),
+                                    CustomBackButton(
+                                      color: lighterGreyColor,
                                     ),
                                     AutoSizeText(
                                       user!.name,
                                       maxLines: 1,
                                       style: TextStyle(
                                         color: lighterGreyColor,
-                                        fontSize: 25.sp,
+                                        fontSize: 22.sp,
                                         fontFamily: "SFProDisplaySemibold",
                                       ),
                                     ),
@@ -134,9 +127,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontFamily: "SFProDisplayMedium",
                                 ),
                               ),
-                              SizedBox(
-                                height: 10.w,
-                              ),
+                              (user!.description == "")
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      height: 15.w,
+                                    ),
                               Container(
                                 width: 0.75.sw,
                                 alignment: Alignment.center,
@@ -152,9 +147,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: 15.w,
-                              ),
+                              (user!.description == "")
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      height: 15.w,
+                                    ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -162,77 +159,70 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ? GestureDetector(
                                           onTap: () => unfollow(),
                                           child: Container(
-                                            height: 32.w,
-                                            width: 110.w,
-                                            alignment: Alignment.center,
+                                            height: kToolbarHeight / 1.5,
+                                            width: 130.w,
                                             decoration: BoxDecoration(
-                                              color: accentColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.r),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(12.r),
+                                              ),
+                                              color: lighterGreyColor,
                                             ),
-                                            child: AutoSizeText(
-                                              AppLocalizations.of(context)!
-                                                  .translate('following'),
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: lighterGreyColor,
-                                                fontSize: kMainSpacing,
-                                                fontFamily:
-                                                    "SFProDisplaySemiBold",
+                                            child: Center(
+                                              child: GradientText(
+                                                AppLocalizations.of(context)!
+                                                    .translate('unfollow'),
+                                                gradient:
+                                                    LinearGradient(colors: [
+                                                  accentColor,
+                                                  accentColorTwo,
+                                                ]),
+                                                style: TextStyle(
+                                                  color: accentColor,
+                                                  fontSize: kMainTxtSize,
+                                                  fontFamily:
+                                                      "SFProDisplaySemibold",
+                                                ),
                                               ),
                                             ),
                                           ),
                                         )
-                                      : GestureDetector(
+                                      : CustomButton(
                                           onTap: () => follow(),
-                                          child: Container(
-                                            height: 32.w,
-                                            width: 80.w,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              color: lighterGreyColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(12.r),
-                                            ),
-                                            child: AutoSizeText(
-                                              AppLocalizations.of(context)!
-                                                  .translate('follow'),
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: accentColor,
-                                                fontSize: kMainSpacing,
-                                                fontFamily:
-                                                    "SFProDisplaySemiBold",
-                                              ),
-                                            ),
-                                          ),
+                                          text: AppLocalizations.of(context)!
+                                              .translate('follow'),
+                                          height: kToolbarHeight / 1.5,
+                                          width: 130.w,
+                                          borderRadius: 12.r,
+                                          color1: accentColor,
+                                          color2: accentColorTwo,
+                                          loading: false,
                                         ),
                                   SizedBox(
-                                    width: 5.w,
+                                    width: 10.w,
                                   ),
                                   GestureDetector(
                                     onTap: () => Navigator.of(context).pop(),
                                     child: Container(
-                                      height: 32.w,
-                                      width: 32.w,
+                                      height: kToolbarHeight / 1.5,
+                                      width: kToolbarHeight / 1.5,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                         color: lighterGreyColor,
                                         borderRadius:
                                             BorderRadius.circular(12.r),
                                       ),
-                                      child: Icon(
-                                        ClapAndViewIcons.message_45,
-                                        color: accentColor,
+                                      child: const RadiantGradientMask(
+                                        child: Icon(
+                                          ClapAndViewIcons.message_45,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 15.w,
+                                height: kMainSpacing,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -378,20 +368,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? SizedBox(
                               width: (1.sw - 60.w) / 2,
                               height: ((1.sw - 60.w) / 2) / 0.75,
-                              child: GestureDetector(
-                                onTap: () => Navigator.of(context).push(
-                                  SlideRoute(
-                                    page: WatchStreamPage(
-                                      id: stream!.id,
-                                    ),
-                                  ),
-                                ),
-                                child: StreamCard(
-                                  thumb: stream!.thumbnail,
-                                  title: stream!.title,
-                                  name: stream!.author_name,
-                                  viewsCount: stream!.count,
-                                ),
+                              child: StreamCard(
+                                streamModel: stream!,
                               ),
                             )
                           : Container(),

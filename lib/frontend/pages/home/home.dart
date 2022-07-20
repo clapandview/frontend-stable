@@ -1,21 +1,27 @@
+import 'dart:io';
+
+import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
+import 'package:clap_and_view/frontend/masks/gradient_mask.dart';
+import 'package:clap_and_view/frontend/pages/authentication/auth.dart';
 import 'package:clap_and_view/frontend/pages/home/feed.dart';
 import 'package:clap_and_view/frontend/pages/home/publish_stream.dart';
 import 'package:clap_and_view/frontend/pages/home/search.dart';
 import 'package:clap_and_view/frontend/pages/home/settings.dart';
+import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({
-    Key? key,
-  }) : super(key: key);
+  const HomePage({Key? key, required this.isLoggedIn}) : super(key: key);
+
+  final bool isLoggedIn;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -41,6 +47,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    AntMediaFlutter.requestPermissions();
+
+    if (Platform.isAndroid) {
+      AntMediaFlutter.startForegroundService();
+    }
+
     Provider.of<UserController>(context, listen: false).loadFirstPage();
     Provider.of<BroadcastController>(context, listen: false)
         .loadFirstPageSmart("", "");
@@ -103,10 +115,20 @@ class _HomePageState extends State<HomePage> {
                             return GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                                _pageController.jumpToPage(index);
+                                if (widget.isLoggedIn ||
+                                    index == 0 ||
+                                    index == 1) {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                  _pageController.jumpToPage(index);
+                                } else if (index == 2 || index == 3) {
+                                  Navigator.of(context).push(
+                                    SlideRoute(
+                                      page: const AuthPage(),
+                                    ),
+                                  );
+                                }
                               },
                               child: Container(
                                 color: Colors.transparent,
@@ -155,26 +177,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class RadiantGradientMask extends StatelessWidget {
-  const RadiantGradientMask({Key? key, required this.child}) : super(key: key);
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      shaderCallback: (bounds) => LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          accentColor,
-          accentColorTwo,
-        ],
-      ).createShader(bounds),
-      child: child,
     );
   }
 }

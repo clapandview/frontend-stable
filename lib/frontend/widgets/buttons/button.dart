@@ -13,6 +13,8 @@ class CustomButton extends StatelessWidget {
     required this.height,
     required this.width,
     required this.borderRadius,
+    required this.color1,
+    required this.color2,
     required this.loading,
   }) : super(key: key);
 
@@ -21,6 +23,8 @@ class CustomButton extends StatelessWidget {
   final double height;
   final double width;
   final double borderRadius;
+  final Color color1;
+  final Color color2;
   final bool loading;
 
   @override
@@ -39,8 +43,8 @@ class CustomButton extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              accentColor,
-              accentColorTwo,
+              color1,
+              color2,
             ],
           ),
         ),

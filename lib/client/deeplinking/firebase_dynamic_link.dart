@@ -65,11 +65,11 @@ class FirebaseDynamicListService {
       if (firstPathSegment == "tg-auth") {
         var parameters = deepLink.queryParameters;
         if (parameters["code"] == tgCode) {
-          Navigator.of(context).pushReplacement(
+          /*Navigator.of(context).pushReplacement(
             FadeRoute(
               page: const HomePage(),
             ),
-          );
+          );*/
         }
       }
     });

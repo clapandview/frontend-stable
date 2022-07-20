@@ -162,6 +162,8 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                     }
                   },
                   icon: ClapAndViewIcons.multiply,
+                  color: Colors.black.withOpacity(0.75),
+                  colorIcon: Colors.white,
                 ),
               ),
             ],

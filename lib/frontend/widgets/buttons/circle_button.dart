@@ -5,10 +5,14 @@ class CustomCircleButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.icon,
+    required this.color,
+    required this.colorIcon,
   }) : super(key: key);
 
   final GestureTapCallback onTap;
   final IconData icon;
+  final Color color;
+  final Color colorIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +22,13 @@ class CustomCircleButton extends StatelessWidget {
         height: kToolbarHeight / 1.2,
         width: kToolbarHeight / 1.2,
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.75),
+          color: color,
           shape: BoxShape.circle,
         ),
         child: Center(
           child: Icon(
             icon,
-            color: Colors.white,
+            color: colorIcon,
           ),
         ),
       ),
