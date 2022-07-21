@@ -1,9 +1,12 @@
+import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseDynamicListService {
   static Future<String> createDynamicLink(bool isShort, String data) async {
@@ -69,6 +72,28 @@ class FirebaseDynamicListService {
           if (kDebugMode) {
             print(parameters);
           }
+          await Provider.of<UserController>(context, listen: false).auth(
+            User(
+              id: "",
+              phone: parameters["phone"]!,
+              name: parameters["name"]!,
+              username: parameters["telegram_username"]!,
+              age: 18,
+              following: [],
+              following_count: 0,
+              followers_count: 0,
+              description: "",
+              link: "",
+              fav_hashtags: [],
+              profile_pic: "basic",
+              gender: "",
+              gender_preference: [],
+              datetime_registration: DateTime.now().toString(),
+              balance: 0,
+              email: "",
+            ),
+          );
+          // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(
             FadeRoute(
               page: const HomePage(

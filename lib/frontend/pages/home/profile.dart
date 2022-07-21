@@ -315,7 +315,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               ),
                               SizedBox(
-                                height: 10.w,
+                                height: kMainSpacing,
                               ),
                               (stream != null && stream!.status == 2)
                                   ? Column(
@@ -325,8 +325,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              width: 22.w,
-                                              height: 22.w,
+                                              width: 18.w,
+                                              height: 18.w,
                                               decoration: BoxDecoration(
                                                 color: const Color.fromRGBO(
                                                     255, 0, 0, 1),
@@ -337,7 +337,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 10.w,
+                                              width: 10.r,
                                             ),
                                             AutoSizeText(
                                               AppLocalizations.of(context)!
@@ -354,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ],
                                         ),
                                         SizedBox(
-                                          height: 10.w,
+                                          height: kMainSpacing,
                                         ),
                                       ],
                                     )

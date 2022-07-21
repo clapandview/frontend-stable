@@ -28,5 +28,8 @@
     "following": "following",
     "followers": "followers",
     "bobliers": "bobliers",
-    "live_now": "LIVE NOW"
+    "live_now": "LIVE NOW",
+    "before_going_live": "Before going live:",
+    "check_stream_settings": "🎛 Check stream settings",
+    "check_permissions": "🔕 Check if all permissions granted"
 }

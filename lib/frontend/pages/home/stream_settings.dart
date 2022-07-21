@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
+import 'package:clap_and_view/client/models/category.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 
 class StreamSettings extends StatefulWidget {
   const StreamSettings({Key? key}) : super(key: key);
@@ -26,6 +29,14 @@ class _StreamSettingsState extends State<StreamSettings> {
   final ImagePicker _picker = ImagePicker();
   final TextEditingController _controllerTitle = TextEditingController();
   final TextEditingController _controllerDescription = TextEditingController();
+  late double _distanceToField;
+  final TextfieldTagsController _controllerTags = TextfieldTagsController();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _distanceToField = MediaQuery.of(context).size.width;
+  }
 
   @override
   void initState() {
@@ -165,6 +176,223 @@ class _StreamSettingsState extends State<StreamSettings> {
                       ],
                       letterSpacing: 0.0,
                     ),
+                    SizedBox(
+                      height: kMainSpacing,
+                    ),
+
+                    ///
+                    Autocomplete<String>(
+                      optionsViewBuilder: (context, onSelected, options) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 10.r, vertical: 4.r),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Material(
+                              elevation: 4.0,
+                              child: ConstrainedBox(
+                                constraints:
+                                    const BoxConstraints(maxHeight: 200),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: options.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final dynamic option =
+                                        options.elementAt(index);
+                                    return TextButton(
+                                      onPressed: () {
+                                        onSelected(option);
+                                      },
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 15.0),
+                                          child: Text(
+                                            '#$option',
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 74, 137, 92),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      optionsBuilder: (TextEditingValue textEditingValue) {
+                        if (textEditingValue.text == '') {
+                          return const Iterable<String>.empty();
+                        }
+                        List<String> list = [];
+                        Provider.of<CategoryController>(context, listen: false)
+                            .categories
+                            .where((Hashtag option) {
+                          return option.name
+                              .contains(textEditingValue.text.toLowerCase());
+                        }).forEach((item) {
+                          list.add(item.name);
+                        });
+                        return list;
+                      },
+                      onSelected: (String selectedTag) {
+                        _controllerTags.addTag = selectedTag;
+                      },
+                      fieldViewBuilder: (context, ttec, tfn, onFieldSubmitted) {
+                        return TextFieldTags(
+                          textEditingController: ttec,
+                          focusNode: tfn,
+                          textfieldTagsController: _controllerTags,
+                          textSeparators: const [' ', ','],
+                          letterCase: LetterCase.normal,
+                          validator: (String tag) {
+                            if (_controllerTags.getTags!.contains(tag)) {
+                              return 'you already entered that';
+                            }
+                            return null;
+                          },
+                          inputfieldBuilder: (context, tec, fn, error,
+                              onChanged, onSubmitted) {
+                            return ((context, sc, tags, onTagDelete) {
+                              return TextField(
+                                controller: tec,
+                                focusNode: fn,
+                                cursorColor: accentColorTwo,
+                                style: TextStyle(
+                                  fontSize: kMainTxtSize,
+                                  letterSpacing: 0.0,
+                                  fontFamily: "SFProDisplayMedium",
+                                  color: Colors.black,
+                                ),
+                                decoration: InputDecoration(
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderSide: BorderSide(
+                                        color: lighterGreyColor, width: 2.0),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderSide: BorderSide(
+                                        color: lighterGreyColor, width: 2.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderSide: BorderSide(
+                                        color: lighterGreyColor, width: 2.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderSide: BorderSide(
+                                        color: lighterGreyColor, width: 2.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    borderSide: BorderSide(
+                                        color: lighterGreyColor, width: 2.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: lighterGreyColor,
+                                  contentPadding: EdgeInsets.all(12.r),
+                                  isCollapsed: true,
+                                  helperText: 'Enter language...',
+                                  helperStyle: TextStyle(
+                                    color: accentColor,
+                                    fontSize: kMainTxtSize,
+                                    fontFamily: "SFProDisplayMedium",
+                                  ),
+                                  hintText: _controllerTags.hasTags
+                                      ? ''
+                                      : "Enter tag...",
+                                  hintStyle: TextStyle(
+                                    fontSize: kMainTxtSize,
+                                    letterSpacing: 0.0,
+                                    fontFamily: "SFProDisplayMedium",
+                                    color: Colors.black.withOpacity(0.5),
+                                  ),
+                                  errorText: error,
+                                  prefixIconConstraints: BoxConstraints(
+                                      maxWidth: _distanceToField * 0.74),
+                                  prefixIcon: tags.isNotEmpty
+                                      ? SingleChildScrollView(
+                                          controller: sc,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                              children: tags.map((String tag) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(20.r),
+                                                ),
+                                                gradient: LinearGradient(
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [
+                                                    accentColor,
+                                                    accentColorTwo,
+                                                  ],
+                                                ),
+                                              ),
+                                              margin:
+                                                  EdgeInsets.only(right: 10.r),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.r,
+                                                  vertical: 4.r),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  InkWell(
+                                                    child: Text(
+                                                      '#$tag',
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 4.r,
+                                                  ),
+                                                  GestureDetector(
+                                                    child: Icon(
+                                                      Icons.cancel,
+                                                      size: 14.r,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              233,
+                                                              233,
+                                                              233),
+                                                    ),
+                                                    onTap: () {
+                                                      onTagDelete(tag);
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }).toList()),
+                                        )
+                                      : null,
+                                ),
+                                onChanged: onChanged,
+                                onSubmitted: onSubmitted,
+                              );
+                            });
+                          },
+                        );
+                      },
+                    ),
+
+                    ///
                     SizedBox(
                       height: kMainSpacing,
                     ),

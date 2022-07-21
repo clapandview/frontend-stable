@@ -146,7 +146,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                   margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  decoration: const BoxDecoration(color: Colors.black54),
+                  decoration: BoxDecoration(color: darkGreyColor),
                   child: RTCVideoView(_remoteRenderer),
                 ),
               ),

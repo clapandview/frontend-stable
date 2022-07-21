@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/utils/config.dart';
@@ -6,12 +9,14 @@ import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:time_machine/time_machine.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -21,6 +26,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  late DateTime date;
   final ImagePicker _picker = ImagePicker();
   bool loading = false;
   final TextEditingController _controllerName = TextEditingController();
@@ -30,6 +36,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   void initState() {
+    date = DateTime(
+        DateTime.now().year -
+            Provider.of<UserController>(context, listen: false).currentUser.age,
+        DateTime.now().month,
+        DateTime.now().day);
     _controllerName.text =
         Provider.of<UserController>(context, listen: false).currentUser.name;
     _controllerNickname.text =
@@ -147,6 +158,64 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: kMainSpacing,
             ),
+            GestureDetector(
+              onTap: () => (Platform.isIOS)
+                  ? _showDialog(
+                      CupertinoDatePicker(
+                        initialDateTime: date,
+                        mode: CupertinoDatePickerMode.date,
+                        use24hFormat: true,
+                        maximumDate: date,
+                        onDateTimeChanged: (DateTime newDate) {
+                          setState(() => date = newDate);
+                        },
+                      ),
+                    )
+                  : _selectDate(context),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: kToolbarHeight / 1.2,
+                padding: EdgeInsets.only(
+                  left: 15.r,
+                  right: 15.r,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: lighterGreyColor,
+                    width: 2.r,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15.r),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AutoSizeText(
+                      convertToAge().toString() +
+                          AppLocalizations.of(context)!.translate('years_old'),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: kMainTxtSize,
+                        fontFamily: "SFProDisplayMedium",
+                      ),
+                    ),
+                    AutoSizeText(
+                      '${date.month}-${date.day}-${date.year}',
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: kMainTxtSize,
+                        fontFamily: "SFProDisplayMedium",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: kMainSpacing,
+            ),
             CustomTextField(
               controller: _controllerLink,
               keyboardType: TextInputType.url,
@@ -203,6 +272,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     .updateBio(_controllerBio.text);
                 Provider.of<UserController>(context, listen: false)
                     .updateLink(_controllerLink.text);
+                Provider.of<UserController>(context, listen: false)
+                    .updateAge(convertToAge());
 
                 await Provider.of<UserController>(context, listen: false)
                     .updateUser(
@@ -234,6 +305,51 @@ class _SettingsPageState extends State<SettingsPage> {
       await Provider.of<UserController>(context, listen: false)
           .startUploadImg(image);
     }
+  }
+
+  void _showDialog(Widget child) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 216,
+        padding: const EdgeInsets.only(top: 6.0),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        decoration: BoxDecoration(
+          color: CupertinoColors.systemBackground.resolveFrom(context),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0),
+          ),
+        ),
+        child: SafeArea(
+          top: false,
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: date,
+      firstDate: DateTime(
+          DateTime.now().year - 150, DateTime.now().month, DateTime.now().day),
+      lastDate: date,
+    );
+    if (picked != null && picked != date) {
+      setState(() {
+        date = picked;
+      });
+    }
+  }
+
+  int convertToAge() {
+    LocalDate now = LocalDate.today();
+    LocalDate bDate = LocalDate.dateTime(date);
+    return now.periodSince(bDate).years;
   }
 }
 

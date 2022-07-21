@@ -301,4 +301,9 @@ class UserController extends ChangeNotifier {
     currentUser.link = link;
     notifyListeners();
   }
+
+  void updateAge(int age) {
+    currentUser.age = age;
+    notifyListeners();
+  }
 }
