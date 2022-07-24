@@ -24,8 +24,7 @@ class _LoadPageState extends State<LoadPage> {
   }
 
   Future loadApp() async {
-    final phone = "77777777777";
-    //GetStorage().read('phone');
+    var phone = GetStorage().read('phone');
     bool isLoggedIn = false;
 
     if (phone != null) {

@@ -22,7 +22,7 @@ class Session {
   toJson(Session session) {
     return {
       "_id": session.id,
-      "ts": session.ts,
+      "ts": session.ts.toIso8601String(),
       "metadata": session.metadata.toJson(session.metadata),
       "revenue": session.revenue,
     };

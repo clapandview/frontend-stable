@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/stream.dart';
@@ -340,10 +341,24 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                     Provider.of<BroadcastController>(context, listen: false)
                         .currentStream
                         .status = 2;
+
                     cron.schedule(Schedule.parse('10-20 * * * *'), () async {
-                      // Add Smart-Score count and local update
-                      await Provider.of<BroadcastController>(context, listen: false).updateSmartScore(Provider.of<BroadcastController>(context, listen: false)
-                        .currentStream);
+                      Provider.of<BroadcastController>(context, listen: false)
+                          .currentStream
+                          .smart_score = await Provider.of<SessionController>(
+                              context,
+                              listen: false)
+                          .calculateAverageTimeWatched(
+                              Provider.of<BroadcastController>(context,
+                                      listen: false)
+                                  .currentStream
+                                  .id);
+                      await Provider.of<BroadcastController>(context,
+                              listen: false)
+                          .updateSmartScore(Provider.of<BroadcastController>(
+                                  context,
+                                  listen: false)
+                              .currentStream);
                     });
                     _connect();
                   }

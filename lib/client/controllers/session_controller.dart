@@ -33,9 +33,7 @@ class SessionController extends ChangeNotifier {
       ))
           .data;
 
-      if (kDebugMode) {
-        print(data);
-      }
+      return data;
     } catch (error) {
       if (kDebugMode) {
         print(error);

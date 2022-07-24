@@ -1,4 +1,5 @@
 import 'package:clap_and_view/client/controllers/category_controller.dart';
+import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/frontend/pages/load.dart';
@@ -28,6 +29,9 @@ void main() async {
         ),
         ChangeNotifierProvider<BroadcastController>(
           create: (context) => BroadcastController(),
+        ),
+        ChangeNotifierProvider<SessionController>(
+          create: (context) => SessionController(),
         ),
       ],
       child: const MyApp(),

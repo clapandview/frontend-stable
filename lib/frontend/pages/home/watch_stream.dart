@@ -1,6 +1,5 @@
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/session_controller.dart';
-import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/meta.dart';
 import 'package:clap_and_view/client/models/session.dart';
@@ -167,10 +166,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                             Provider.of<UserController>(context, listen: false)
                                 .currentUser
                                 .id,
-                        stream_id: Provider.of<BroadcastController>(context,
-                                listen: false)
-                            .currentStream
-                            .id);
+                        stream_id: widget.id);
                     Session session = Session(
                         id: '',
                         ts: DateTime.now(),
