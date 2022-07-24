@@ -4,6 +4,7 @@ import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/models/category.dart';
 import 'package:clap_and_view/client/utils/config.dart';
+import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
@@ -179,49 +180,49 @@ class _StreamSettingsState extends State<StreamSettings> {
                     SizedBox(
                       height: kMainSpacing,
                     ),
-
-                    ///
                     Autocomplete<String>(
                       optionsViewBuilder: (context, onSelected, options) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal: 10.r, vertical: 4.r),
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Material(
-                              elevation: 4.0,
-                              child: ConstrainedBox(
-                                constraints:
-                                    const BoxConstraints(maxHeight: 200),
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: options.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    final dynamic option =
-                                        options.elementAt(index);
-                                    return TextButton(
-                                      onPressed: () {
-                                        onSelected(option);
-                                      },
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 15.0),
-                                          child: Text(
-                                            '#$option',
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 74, 137, 92),
-                                            ),
-                                          ),
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              top: kMainSpacing, right: kMainSpacing * 2),
+                          child: Material(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15.r),
+                            ),
+                            elevation: 4.0,
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: kToolbarHeight,
+                                maxHeight: 100.r,
+                              ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: options.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final dynamic option =
+                                      options.elementAt(index);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      onSelected(option);
+                                    },
+                                    child: Container(
+                                      color: Colors.transparent,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.r, vertical: 5.r),
+                                      child: Text(
+                                        '#$option',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          color: accentColor,
+                                          fontSize: kMainTxtSize,
+                                          fontFamily: "SFProDisplayMedium",
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -247,6 +248,11 @@ class _StreamSettingsState extends State<StreamSettings> {
                       },
                       fieldViewBuilder: (context, ttec, tfn, onFieldSubmitted) {
                         return TextFieldTags(
+                          initialTags: List<String>.from(
+                              Provider.of<BroadcastController>(context,
+                                      listen: false)
+                                  .currentStream
+                                  .hashtag_list),
                           textEditingController: ttec,
                           focusNode: tfn,
                           textfieldTagsController: _controllerTags,
@@ -254,7 +260,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                           letterCase: LetterCase.normal,
                           validator: (String tag) {
                             if (_controllerTags.getTags!.contains(tag)) {
-                              return 'you already entered that';
+                              return AppLocalizations.of(context)!
+                                  .translate('you_have_already_entered_that');
                             }
                             return null;
                           },
@@ -301,7 +308,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                                   fillColor: lighterGreyColor,
                                   contentPadding: EdgeInsets.all(12.r),
                                   isCollapsed: true,
-                                  helperText: 'Enter language...',
+                                  helperText: AppLocalizations.of(context)!
+                                      .translate('add_tag'),
                                   helperStyle: TextStyle(
                                     color: accentColor,
                                     fontSize: kMainTxtSize,
@@ -309,7 +317,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                                   ),
                                   hintText: _controllerTags.hasTags
                                       ? ''
-                                      : "Enter tag...",
+                                      : AppLocalizations.of(context)!
+                                          .translate('enter_tags'),
                                   hintStyle: TextStyle(
                                     fontSize: kMainTxtSize,
                                     letterSpacing: 0.0,
@@ -324,6 +333,8 @@ class _StreamSettingsState extends State<StreamSettings> {
                                           controller: sc,
                                           physics:
                                               const BouncingScrollPhysics(),
+                                          padding: EdgeInsets.only(
+                                              left: 10.r, right: 10.r),
                                           scrollDirection: Axis.horizontal,
                                           child: Row(
                                               children: tags.map((String tag) {
@@ -342,7 +353,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                                                 ),
                                               ),
                                               margin:
-                                                  EdgeInsets.only(right: 10.r),
+                                                  EdgeInsets.only(right: 5.r),
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 10.r,
                                                   vertical: 4.r),
@@ -355,22 +366,26 @@ class _StreamSettingsState extends State<StreamSettings> {
                                                     child: Text(
                                                       '#$tag',
                                                       style: const TextStyle(
-                                                          color: Colors.white),
+                                                        fontFamily:
+                                                            "SFProDisplayMedium",
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                   SizedBox(
                                                     width: 4.r,
                                                   ),
                                                   GestureDetector(
-                                                    child: Icon(
-                                                      Icons.cancel,
-                                                      size: 14.r,
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              233,
-                                                              233,
-                                                              233),
+                                                    child: Container(
+                                                      color: Colors.transparent,
+                                                      child: Icon(
+                                                        ClapAndViewIcons
+                                                            .multiply,
+                                                        size: 14.r,
+                                                        color: const Color
+                                                                .fromARGB(
+                                                            255, 233, 233, 233),
+                                                      ),
                                                     ),
                                                     onTap: () {
                                                       onTagDelete(tag);
@@ -391,21 +406,20 @@ class _StreamSettingsState extends State<StreamSettings> {
                         );
                       },
                     ),
-
-                    ///
                     SizedBox(
-                      height: kMainSpacing,
+                      height: kMainSpacing * 2,
                     ),
                     CustomButton(
                       onTap: () async {
                         setState(() {
                           loading = !loading;
                         });
-
                         Provider.of<BroadcastController>(context, listen: false)
                             .updateTitle(_controllerTitle.text);
                         Provider.of<BroadcastController>(context, listen: false)
                             .updateDescription(_controllerDescription.text);
+                        Provider.of<BroadcastController>(context, listen: false)
+                            .updateTags(_controllerTags.getTags!);
 
                         await Provider.of<BroadcastController>(context,
                                 listen: false)

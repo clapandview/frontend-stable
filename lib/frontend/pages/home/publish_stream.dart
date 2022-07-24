@@ -16,6 +16,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:cron/cron.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -33,6 +34,7 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
   bool _isStreaming = false;
   bool _micOn = true;
+  final cron = Cron();
 
   @override
   initState() {
@@ -109,10 +111,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
               _localRenderer.srcObject = null;
               _remoteRenderer.srcObject = null;
               _isStreaming = false;
-              //Navigator.pop(context);
             });
             break;
-
           case HelperState.ConnectionClosed:
           case HelperState.ConnectionError:
           case HelperState.ConnectionOpen:
@@ -334,11 +334,17 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                     Provider.of<BroadcastController>(context, listen: false)
                         .currentStream
                         .status = 3;
+                    await cron.close();
                     _finish();
                   } else {
                     Provider.of<BroadcastController>(context, listen: false)
                         .currentStream
                         .status = 2;
+                    cron.schedule(Schedule.parse('10-20 * * * *'), () async {
+                      // Add Smart-Score count and local update
+                      await Provider.of<BroadcastController>(context, listen: false).updateSmartScore(Provider.of<BroadcastController>(context, listen: false)
+                        .currentStream);
+                    });
                     _connect();
                   }
 

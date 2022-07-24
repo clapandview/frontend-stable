@@ -78,6 +78,31 @@ class BroadcastController extends ChangeNotifier {
     }
   }
 
+  Future updateSmartScore(StreamModel stream) async {
+    final token = GetStorage().read('token');
+
+    try {
+      final streamsData = (await CustomDio(token).send(
+        reqMethod: "post",
+        path: "stream/UpdateSmartScore",
+        body: stream.toJson(stream),
+      ))
+          .data;
+
+      currentStream.smart_score = stream.smart_score;
+
+      notifyListeners();
+
+      if (kDebugMode) {
+        print(streamsData);
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+    }
+  }
+
   Future getOneByUserId(String id) async {
     final token = GetStorage().read('token');
     try {
@@ -363,6 +388,11 @@ class BroadcastController extends ChangeNotifier {
 
   void updateDescription(String description) {
     currentStream.description = description;
+    notifyListeners();
+  }
+
+  void updateTags(List<String> tags) {
+    currentStream.hashtag_list = tags;
     notifyListeners();
   }
 }

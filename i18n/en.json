@@ -31,5 +31,8 @@
     "live_now": "LIVE NOW",
     "before_going_live": "Before going live:",
     "check_stream_settings": "🎛 Check stream settings",
-    "check_permissions": "🔕 Check if all permissions granted"
+    "check_permissions": "🔕 Check if all permissions granted",
+    "add_tag": "Add tag",
+    "enter_tags": "Enter tags",
+    "you_have_already_entered_that": "You have already entered that"
 }

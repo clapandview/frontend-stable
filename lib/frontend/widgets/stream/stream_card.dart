@@ -1,5 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clap_and_view/client/controllers/session_controller.dart';
+import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/meta.dart';
+import 'package:clap_and_view/client/models/session.dart';
 import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
@@ -10,6 +14,7 @@ import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 class StreamCard extends StatefulWidget {
   const StreamCard({
@@ -29,13 +34,24 @@ class _StreamCardState extends State<StreamCard>
   Widget build(BuildContext context) {
     super.build(context);
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        SlideRoute(
-          page: WatchStreamPage(
-            id: widget.streamModel.id,
+      onTap: () {
+        Meta meta = Meta(
+            status: 0,
+            user_id: Provider.of<UserController>(context, listen: false)
+                .currentUser
+                .id,
+            stream_id: widget.streamModel.id);
+        Session session =
+            Session(id: '', ts: DateTime.now(), metadata: meta, revenue: 0.0);
+        Provider.of<SessionController>(context, listen: false).createOne(session);
+        Navigator.of(context).push(
+          SlideRoute(
+            page: WatchStreamPage(
+              id: widget.streamModel.id,
+            ),
           ),
-        ),
-      ),
+        );
+      },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.r),
         child: Stack(

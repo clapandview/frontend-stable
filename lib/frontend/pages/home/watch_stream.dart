@@ -1,4 +1,9 @@
 import 'package:ant_media_flutter/ant_media_flutter.dart';
+import 'package:clap_and_view/client/controllers/session_controller.dart';
+import 'package:clap_and_view/client/controllers/stream_controller.dart';
+import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/meta.dart';
+import 'package:clap_and_view/client/models/session.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -8,6 +13,7 @@ import 'package:flutter/material.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:provider/provider.dart';
 
 class WatchStreamPage extends StatefulWidget {
   const WatchStreamPage({
@@ -155,6 +161,23 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                 right: kMainSpacing,
                 child: CustomCircleButton(
                   onTap: () {
+                    Meta meta = Meta(
+                        status: 1,
+                        user_id:
+                            Provider.of<UserController>(context, listen: false)
+                                .currentUser
+                                .id,
+                        stream_id: Provider.of<BroadcastController>(context,
+                                listen: false)
+                            .currentStream
+                            .id);
+                    Session session = Session(
+                        id: '',
+                        ts: DateTime.now(),
+                        metadata: meta,
+                        revenue: 0.0);
+                    Provider.of<SessionController>(context, listen: false)
+                        .createOne(session);
                     if (_inStream) {
                       _finish();
                     } else {
