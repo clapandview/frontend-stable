@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/client/controllers/category_controller.dart';
-import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/models/category.dart';
 import 'package:clap_and_view/client/utils/config.dart';
