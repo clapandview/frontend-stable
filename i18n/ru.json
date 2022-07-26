@@ -26,5 +26,7 @@
     "following": "подписки",
     "followers": "подписчики",
     "bobliers": "боблеры",
-    "live_now": "LIVE NOW"
+    "live_now": "LIVE NOW",
+    "type_first_message": "Напишите первым",
+    "type_new_message": "Написать сообщение"
 }

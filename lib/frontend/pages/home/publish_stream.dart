@@ -1,12 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:ant_media_flutter/ant_media_flutter.dart';
+import 'package:clap_and_view/client/api/firebase_api.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/group.dart';
 import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
+import 'package:clap_and_view/frontend/pages/home/before_warch_stream_page.dart';
 import 'package:clap_and_view/frontend/pages/home/stream_settings.dart';
 import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
@@ -286,8 +289,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                 });
                 Navigator.of(context).push(
                   SlideRoute(
-                    page: WatchStreamPage(
-                      id: Provider.of<BroadcastController>(context,
+                    page: BeforeWatchStreamPage(
+                      idCurrentStream: Provider.of<BroadcastController>(context,
                               listen: false)
                           .currentStream
                           .id,

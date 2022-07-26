@@ -4,6 +4,7 @@ import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
+import 'package:clap_and_view/frontend/pages/home/before_warch_stream_page.dart';
 import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:decorated_icon/decorated_icon.dart';
@@ -31,8 +32,8 @@ class _StreamCardState extends State<StreamCard>
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         SlideRoute(
-          page: WatchStreamPage(
-            id: widget.streamModel.id,
+          page: BeforeWatchStreamPage(
+            idCurrentStream: widget.streamModel.id,
           ),
         ),
       ),

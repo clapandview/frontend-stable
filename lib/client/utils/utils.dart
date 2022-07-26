@@ -1,0 +1,36 @@
+import 'dart:async';
+import 'package:collection/collection.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Utils {
+  static StreamTransformer<QuerySnapshot<Map<String, dynamic>>, List<T>>
+  transformer<T>(T Function(Map<String, dynamic> json) fromJson) {
+    return StreamTransformer<QuerySnapshot<Map<String, dynamic>>,
+        List<T>>.fromHandlers(
+      handleData:
+          (QuerySnapshot<Map<String, dynamic>> data, EventSink<List<T>> sink) {
+        final snaps = data.docs.map((doc) => doc.data()).toList();
+        data.docs.forEachIndexed((index, doc) {
+          snaps[index]["id"] = doc.id;
+        });
+        final users = snaps.map((json) => fromJson(json)).toList();
+
+        sink.add(users);
+      },
+    );
+  }
+
+  static DateTime? toDateTime(Timestamp value) {
+    // ignore: unnecessary_null_comparison
+    if (value == null) return null;
+
+    return value.toDate();
+  }
+
+  static dynamic fromDateTimeToJson(DateTime date) {
+    // ignore: unnecessary_null_comparison
+    if (date == null) return null;
+
+    return date.toUtc();
+  }
+}

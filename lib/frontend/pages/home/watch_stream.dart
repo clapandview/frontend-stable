@@ -1,20 +1,28 @@
 import 'package:ant_media_flutter/ant_media_flutter.dart';
+import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/group.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
+import 'package:clap_and_view/frontend/widgets/chat/chat_new_message.dart';
+import 'package:clap_and_view/frontend/widgets/chat/message_builder_for_stream.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:provider/provider.dart';
 
 class WatchStreamPage extends StatefulWidget {
   const WatchStreamPage({
     Key? key,
     required this.id,
+    required this.group,
   }) : super(key: key);
 
+  final Group group;
   final String id;
 
   @override
@@ -150,6 +158,19 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                   child: RTCVideoView(_remoteRenderer),
                 ),
               ),
+              Positioned.fill(
+                child: Image.network(
+                  "https://sun1-97.userapi.com/impf/Wg_4K-hVHJVjXT1f2wrMLD6ZbNGNxNDxl5GCnA/Bfx70lkQiAw.jpg?size=1170x1444&quality=95&sign=4d66ad2a796d93d387f9a1d8ca514db0&type=album",
+                  fit: BoxFit.cover,
+                  height: double.infinity,
+                  width: double.infinity,
+                ),
+              ),
+              Positioned.fill(child: GestureDetector(
+                onTap: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+              )),
               Positioned(
                 top: kMainSpacing,
                 right: kMainSpacing,
@@ -165,6 +186,30 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                   color: Colors.black.withOpacity(0.75),
                   colorIcon: Colors.white,
                 ),
+              ),
+              Positioned(
+                left: kMainSpacing / 2,
+                bottom: kMainSpacing / 2,
+                height: 1.sh / 2.5,
+                width: 1.sw / 1.5,
+                child: Column(children: [
+                  Expanded(
+                    child: MessageBuilderForStream(
+                      myIdUser:
+                          Provider.of<UserController>(context, listen: false)
+                              .currentUser
+                              .id,
+                      group: widget.group,
+                    ),
+                  ),
+                  ChatNewMessage(
+                    idUser: Provider.of<UserController>(context, listen: false)
+                        .currentUser
+                        .id,
+                    idGroup: widget.group.id,
+                    isStream: true,
+                  )
+                ]),
               ),
             ],
           );

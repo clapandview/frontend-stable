@@ -26,5 +26,8 @@
     "following": "following",
     "followers": "followers",
     "bobliers": "bobliers",
-    "live_now": "LIVE NOW"
+    "live_now": "LIVE NOW",
+    "type_first_message": "Type first message",
+    "type_new_message": "Type new message"
+
 }
