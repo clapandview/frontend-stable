@@ -60,7 +60,7 @@ class ChatHeader extends StatelessWidget {
                 height: kToolbarHeight / 1.5,
                 fit: BoxFit.cover,
                 imageUrl:
-                    baseUrl + "user/DownloadProfilePic/${user.profile_pic}",
+                    "${baseUrl}user/DownloadProfilePic/${user.profile_pic}",
                 httpHeaders: {
                   'authorization': 'Bearer ${GetStorage().read('token')}'
                 },
