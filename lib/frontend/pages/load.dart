@@ -23,7 +23,7 @@ class _LoadPageState extends State<LoadPage> {
   }
 
   Future loadApp() async {
-    var phone = (kDebugMode) ? "77777777777" : GetStorage().read('phone');
+    var phone = (kDebugMode) ? null : GetStorage().read('phone');
     bool isLoggedIn = false;
 
     if (phone != null) {

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -98,7 +99,7 @@ class _AuthPageState extends State<AuthPage> {
   authTelegram() {
     final Uri url =
         Uri.parse('https://t.me/clapandview_dev_bot/?start=$tgCode');
-    launchUrl(url);
+    launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
   getLinks() async {
