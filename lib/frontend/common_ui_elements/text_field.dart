@@ -21,6 +21,7 @@ class CustomTextField extends StatelessWidget {
     required this.list,
     required this.letterSpacing,
     this.onSubmitted,
+    this.cursorColor,
 
     // for android
     this.enableSuggestions,
@@ -42,6 +43,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String) onChanged;
   final Function(String)? onSubmitted;
   final bool? enableSuggestions;
+  final Color? cursorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,11 @@ class CustomTextField extends StatelessWidget {
         color: colorTextMain,
       ),
       keyboardType: keyboardType,
-      cursorColor: (colorMain != darkGreyColor) ? accentColorTwo : Colors.white,
+      cursorColor: (cursorColor == null)
+          ? (colorMain != darkGreyColor)
+              ? accentColorTwo
+              : Colors.white
+          : cursorColor,
       textCapitalization: cap,
       maxLines: (maxLines == 0) ? null : maxLines,
       minLines: minLines,

@@ -34,5 +34,7 @@
     "check_permissions": "🔕 Check if all permissions granted",
     "add_tag": "Add tag",
     "enter_tags": "Enter tags",
-    "you_have_already_entered_that": "You have already entered that"
+    "you_have_already_entered_that": "You have already entered that",
+    "type_first_message": "Type first message",
+    "type_new_message": "Type new message"
 }

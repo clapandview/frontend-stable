@@ -1,14 +1,19 @@
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/group.dart';
 import 'package:clap_and_view/client/models/meta.dart';
 import 'package:clap_and_view/client/models/session.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
+import 'package:clap_and_view/frontend/widgets/chat/chat_new_message.dart';
+import 'package:clap_and_view/frontend/widgets/chat/message_builder_for_stream.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -18,9 +23,11 @@ class WatchStreamPage extends StatefulWidget {
   const WatchStreamPage({
     Key? key,
     required this.id,
+    required this.group,
   }) : super(key: key);
 
   final String id;
+  final Group group;
 
   @override
   State<WatchStreamPage> createState() => _WatchStreamPageState();
@@ -136,58 +143,97 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: darkerGreyColor,
-      body: SafeArea(
-        child: OrientationBuilder(builder: (context, orientation) {
-          return Stack(
-            children: [
-              Positioned(
-                left: 0.0,
-                right: 0.0,
-                top: 0.0,
-                bottom: 0.0,
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(color: darkGreyColor),
-                  child: RTCVideoView(_remoteRenderer),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+        statusBarColor: darkGreyColor,
+      ),
+      child: Scaffold(
+        backgroundColor: darkerGreyColor,
+        body: SafeArea(
+          child: OrientationBuilder(builder: (context, orientation) {
+            return Stack(
+              children: [
+                Positioned(
+                  left: 0.0,
+                  right: 0.0,
+                  top: 0.0,
+                  bottom: 0.0,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(color: darkGreyColor),
+                    child: RTCVideoView(_remoteRenderer),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: kMainSpacing,
-                right: kMainSpacing,
-                child: CustomCircleButton(
+                Positioned.fill(child: GestureDetector(
                   onTap: () {
-                    Meta meta = Meta(
-                        status: 1,
-                        user_id:
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                )),
+                Positioned(
+                  top: kMainSpacing,
+                  right: kMainSpacing,
+                  child: CustomCircleButton(
+                    onTap: () {
+                      Meta meta = Meta(
+                          status: 1,
+                          user_id: Provider.of<UserController>(context,
+                                  listen: false)
+                              .currentUser
+                              .id,
+                          stream_id: widget.id);
+                      Session session = Session(
+                          id: '',
+                          ts: DateTime.now(),
+                          metadata: meta,
+                          revenue: 0.0);
+                      Provider.of<SessionController>(context, listen: false)
+                          .createOne(session);
+                      if (_inStream) {
+                        _finish();
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    icon: ClapAndViewIcons.multiply,
+                    color: Colors.black.withOpacity(0.75),
+                    colorIcon: Colors.white,
+                  ),
+                ),
+                Positioned(
+                  left: kMainSpacing / 2,
+                  bottom: kMainSpacing / 2,
+                  height: 1.sh / 2.5,
+                  width: 1.sw / 1.5,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: MessageBuilderForStream(
+                          myIdUser: Provider.of<UserController>(context,
+                                  listen: false)
+                              .currentUser
+                              .id,
+                          group: widget.group,
+                        ),
+                      ),
+                      ChatNewMessage(
+                        idUser:
                             Provider.of<UserController>(context, listen: false)
                                 .currentUser
                                 .id,
-                        stream_id: widget.id);
-                    Session session = Session(
-                        id: '',
-                        ts: DateTime.now(),
-                        metadata: meta,
-                        revenue: 0.0);
-                    Provider.of<SessionController>(context, listen: false)
-                        .createOne(session);
-                    if (_inStream) {
-                      _finish();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  icon: ClapAndViewIcons.multiply,
-                  color: Colors.black.withOpacity(0.75),
-                  colorIcon: Colors.white,
+                        idGroup: widget.group.id,
+                        isStream: true,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
