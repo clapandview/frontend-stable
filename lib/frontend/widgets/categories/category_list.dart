@@ -23,8 +23,8 @@ class CategoryList extends StatelessWidget {
           padding: EdgeInsets.only(
             left: kMainSpacing,
             right: kMainSpacing,
-            top: 10.r,
-            bottom: 10.r,
+            top: 12.r,
+            bottom: 12.r,
           ),
           scrollDirection: Axis.horizontal,
           itemCount: Provider.of<CategoryController>(context, listen: false)

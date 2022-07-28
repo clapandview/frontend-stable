@@ -1,6 +1,7 @@
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -52,6 +53,7 @@ class FirebaseDynamicListService {
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
       final Uri deepLink = data.link;
+      // ignore: use_build_context_synchronously
       tgAuthentification(context, deepLink, tgCode);
     }
     return null;
@@ -66,6 +68,7 @@ class FirebaseDynamicListService {
         if (kDebugMode) {
           print(parameters);
         }
+        isLoggedIn = true;
         await Provider.of<UserController>(context, listen: false).auth(
           User(
             id: "",
@@ -90,8 +93,8 @@ class FirebaseDynamicListService {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           FadeRoute(
-            page: const HomePage(
-              isLoggedIn: true,
+            page: HomePage(
+              isLoggedIn: isLoggedIn,
             ),
           ),
         );

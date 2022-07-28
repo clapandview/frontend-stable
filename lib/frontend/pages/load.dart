@@ -1,5 +1,6 @@
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/user.dart';
+import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,6 @@ class _LoadPageState extends State<LoadPage> {
 
   Future loadApp() async {
     var phone = GetStorage().read('phone');
-    bool isLoggedIn = false;
 
     if (phone != null) {
       await Provider.of<UserController>(context, listen: false).auth(

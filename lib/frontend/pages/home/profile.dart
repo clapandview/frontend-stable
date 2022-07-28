@@ -396,25 +396,29 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void follow() {
-    Provider.of<UserController>(context, listen: false).follow(
-        Provider.of<UserController>(context, listen: false).currentUser.id,
-        widget.userId);
-    user!.followers_count += 1;
-    setState(() {
-      isFollowing = true;
-      user = user;
-    });
+    if (isLoggedIn) {
+      Provider.of<UserController>(context, listen: false).follow(
+          Provider.of<UserController>(context, listen: false).currentUser.id,
+          widget.userId);
+      user!.followers_count += 1;
+      setState(() {
+        isFollowing = true;
+        user = user;
+      });
+    }
   }
 
   void unfollow() {
-    Provider.of<UserController>(context, listen: false).unfollow(
-        Provider.of<UserController>(context, listen: false).currentUser.id,
-        widget.userId);
-    user!.followers_count -= 1;
-    setState(() {
-      isFollowing = false;
-      user = user;
-    });
+    if (isLoggedIn) {
+      Provider.of<UserController>(context, listen: false).unfollow(
+          Provider.of<UserController>(context, listen: false).currentUser.id,
+          widget.userId);
+      user!.followers_count -= 1;
+      setState(() {
+        isFollowing = false;
+        user = user;
+      });
+    }
   }
 
   void loadData() async {
@@ -431,14 +435,16 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void checkIfFollowing() {
-    Provider.of<UserController>(context, listen: false)
-        .currentUser
-        .following
-        .forEach((currentUserId) {
-      if (currentUserId == widget.userId) {
-        isFollowing = true;
-      }
-    });
+    if (isLoggedIn) {
+      Provider.of<UserController>(context, listen: false)
+          .currentUser
+          .following
+          .forEach((currentUserId) {
+        if (currentUserId == widget.userId) {
+          isFollowing = true;
+        }
+      });
+    }
   }
 
   _onRefresh() async {

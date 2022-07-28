@@ -51,6 +51,7 @@ dependencies:
   url_launcher: ^6.1.5
   textfield_tags: ^2.0.1
   cron: ^0.5.0
+  uuid: ^3.0.6
 
   #firestore integration
   cloud_firestore: ^3.1.16

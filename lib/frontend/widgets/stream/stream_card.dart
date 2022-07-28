@@ -8,13 +8,14 @@ import 'package:clap_and_view/client/models/stream.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
-import 'package:clap_and_view/frontend/pages/home/before_warch_stream_page.dart';
+import 'package:clap_and_view/frontend/pages/home/watch_stream.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class StreamCard extends StatefulWidget {
   const StreamCard({
@@ -30,6 +31,15 @@ class StreamCard extends StatefulWidget {
 
 class _StreamCardState extends State<StreamCard>
     with AutomaticKeepAliveClientMixin {
+  var uuid = const Uuid();
+  var resId = "";
+
+  @override
+  void initState() {
+    super.initState();
+    resId = uuid.v4();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -37,18 +47,26 @@ class _StreamCardState extends State<StreamCard>
       onTap: () {
         Meta meta = Meta(
             status: 0,
-            user_id: Provider.of<UserController>(context, listen: false)
-                .currentUser
-                .id,
+            user_id: (isLoggedIn)
+                ? Provider.of<UserController>(context, listen: false)
+                    .currentUser
+                    .id
+                : resId,
             stream_id: widget.streamModel.id);
         Session session =
             Session(id: '', ts: DateTime.now(), metadata: meta, revenue: 0.0);
         Provider.of<SessionController>(context, listen: false)
             .createOne(session);
+
         Navigator.of(context).push(
           SlideRoute(
-            page: BeforeWatchStreamPage(
-              idCurrentStream: widget.streamModel.id,
+            page: WatchStreamPage(
+              id: widget.streamModel.id,
+              userId: (isLoggedIn)
+                  ? Provider.of<UserController>(context, listen: false)
+                      .currentUser
+                      .id
+                  : resId,
             ),
           ),
         );

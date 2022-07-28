@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:clap_and_view/client/api/firebase_api.dart';
 import 'package:clap_and_view/client/models/group.dart';
 import 'package:clap_and_view/client/models/message.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'message_container.dart';
 
@@ -37,7 +40,20 @@ class _MessageBuilderForStream extends State<MessageBuilderForStream> {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: (Platform.isIOS)
+                  ? const CupertinoActivityIndicator(
+                      color: Colors.white,
+                    )
+                  : const SizedBox(
+                      height: kToolbarHeight / 2.0,
+                      width: kToolbarHeight / 2.0,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2.0,
+                      ),
+                    ),
+            );
           default:
             if (snapshot.hasError) {
               return const Text('Something Went Wrong Try later');

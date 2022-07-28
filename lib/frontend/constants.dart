@@ -13,3 +13,6 @@ Color telegramColorTwo = const Color.fromRGBO(0, 136, 204, 1);
 // Const UI values
 double kMainSpacing = 20.r;
 double kMainTxtSize = 18.sp;
+
+// User Status
+bool isLoggedIn = false;
