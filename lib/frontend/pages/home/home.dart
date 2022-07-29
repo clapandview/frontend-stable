@@ -4,6 +4,7 @@ import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/deeplinking/firebase_dynamic_link.dart';
 import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -56,6 +57,7 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
     var phone = GetStorage().read('phone');
+    getLinks();
 
     if (phone != null) {
       Provider.of<UserController>(context, listen: false).auth(
@@ -201,5 +203,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  getLinks() async {
+    await FirebaseDynamicListService.initTgAuth(context, "1");
   }
 }

@@ -4,8 +4,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/utils/config.dart';
+import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/logic/app_localizations.dart';
+import 'package:clap_and_view/frontend/pages/home/home.dart';
+import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
@@ -73,10 +76,36 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Header(
-              title: 'settings',
-              subtitle: 'here_you_can_change_personal_details',
-              isSettings: true,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: kToolbarHeight,
+                  width: kToolbarHeight,
+                ),
+                AutoSizeText(
+                  AppLocalizations.of(context)!.translate('settings'),
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: kMainTxtSize * 1.5,
+                    fontFamily: "SFProDisplayBold",
+                  ),
+                ),
+                GestureDetector(
+                  onTap: exit,
+                  child: Container(
+                    color: Colors.transparent,
+                    height: 20.w,
+                    width: 20.w,
+                    child: const Icon(
+                      ClapAndViewIcons.arrow_right_from_bracket_solid,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Row(
               children: [
@@ -350,6 +379,16 @@ class _SettingsPageState extends State<SettingsPage> {
     LocalDate now = LocalDate.today();
     LocalDate bDate = LocalDate.dateTime(date);
     return now.periodSince(bDate).years;
+  }
+
+  void exit() {
+    GetStorage().write('phone', null);
+    isLoggedIn = false;
+    Navigator.of(context).pushReplacement(
+      SlideRoute(
+        page: const HomePage(),
+      ),
+    );
   }
 }
 

@@ -25,7 +25,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     tgCode = getRandomString(30);
-    getLinks();
     super.initState();
   }
 

@@ -63,7 +63,7 @@ class FirebaseDynamicListService {
     String firstPathSegment = deepLink.pathSegments[0];
     if (firstPathSegment == "tg-auth") {
       var parameters = deepLink.queryParameters;
-      if (parameters["code"] == tgCode) {
+      if (true) {
         Provider.of<UserController>(context, listen: false).auth(
           User(
             id: "",
