@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
     var phone = GetStorage().read('phone');
-
+    getLinks();
 
     if (phone != null) {
       Provider.of<UserController>(context, listen: false).auth(
@@ -84,9 +84,6 @@ class _HomePageState extends State<HomePage> {
       );
 
       isLoggedIn = true;
-    }
-    else {
-      getLinks();
     }
     super.initState();
   }

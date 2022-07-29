@@ -57,9 +57,10 @@ class _SuccessfulAuthPageState extends State<SuccessfulAuthPage> {
                   AutoSizeText(
                     "${AppLocalizations.of(context)!.translate('successful_registration')}, ${widget.name} 🎉",
                     maxLines: 2,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: darkerGreyColor,
-                      fontSize: kMainTxtSize * 2,
+                      fontSize: kMainTxtSize * 1.5,
                       fontFamily: "SFProDisplayBold",
                     ),
                   ),
