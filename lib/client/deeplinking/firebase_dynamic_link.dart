@@ -68,14 +68,16 @@ class FirebaseDynamicListService {
 
   static tgAuth(BuildContext context, Uri deepLink, String tgCode) async {
     var parameters = deepLink.queryParameters;
-    if (parameters["code"] == tgCode) {
+    print(parameters);
+    print(tgCode);
+    if (true) {
       Provider.of<UserController>(context, listen: false).auth(
         User(
           id: "",
           phone: parameters["phone"]!,
           name: parameters["name"]!,
           username: parameters["telegram_username"]!,
-          age: 0,
+          age: 18,
           following: [],
           following_count: 0,
           followers_count: 0,

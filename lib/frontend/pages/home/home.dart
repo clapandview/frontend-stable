@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
     var phone = GetStorage().read('phone');
+    
     getLinks();
 
     if (phone != null) {
