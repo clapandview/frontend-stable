@@ -22,8 +22,14 @@ class _LoadPageState extends State<LoadPage> {
     loadApp();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   Future loadApp() async {
-    var phone = GetStorage().read('phone');
+    var phone = null;
 
     if (phone != null) {
       await Provider.of<UserController>(context, listen: false).auth(
@@ -50,7 +56,7 @@ class _LoadPageState extends State<LoadPage> {
 
       isLoggedIn = true;
     }
-    Future.delayed(const Duration(milliseconds: 500), () {
+    Future.delayed(const Duration(milliseconds: 0), () {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacement(
         FadeRoute(
