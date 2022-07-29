@@ -56,16 +56,14 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
     var phone = GetStorage().read('phone');
-    var name = GetStorage().read('name');
-    var nick = GetStorage().read('nick');
 
     if (phone != null) {
       Provider.of<UserController>(context, listen: false).auth(
         User(
           id: "",
           phone: phone,
-          name: name,
-          username: nick,
+          name: "",
+          username: "",
           age: 0,
           following: [],
           following_count: 0,
@@ -142,9 +140,7 @@ class _HomePageState extends State<HomePage> {
                             return GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                if (isLoggedIn ||
-                                    index == 0 ||
-                                    index == 1) {
+                                if (isLoggedIn || index == 0 || index == 1) {
                                   setState(() {
                                     selectedIndex = index;
                                   });

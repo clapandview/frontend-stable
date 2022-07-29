@@ -7,7 +7,6 @@ import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class FirebaseDynamicListService {
@@ -20,7 +19,7 @@ class FirebaseDynamicListService {
       androidParameters: AndroidParameters(
         fallbackUrl: Uri.parse(
             "https://otvet.imgsmail.ru/download/181477461_3f07790140570dba1db8d6cc2a59140f_800.jpg"),
-        packageName: "com.kobylyanskiy.clap_and_view",
+        packageName: "com.georgekobylyanskiy.clap_and_view",
         minimumVersion: 30,
       ),
       iosParameters: IOSParameters(
@@ -92,10 +91,6 @@ class FirebaseDynamicListService {
         if (kDebugMode) {
           print(parameters);
         }
-
-        GetStorage().write('phone', parameters["phone"]!);
-        GetStorage().write('name', parameters["name"]!);
-        GetStorage().write('nick', parameters["telegram_username"]!);
 
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(

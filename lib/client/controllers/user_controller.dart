@@ -32,6 +32,7 @@ class UserController extends ChangeNotifier {
       notifyListeners();
 
       GetStorage().write('token', data['token']);
+      GetStorage().write('phone', user.phone);
     } catch (error) {
       if (kDebugMode) {
         print(error);
