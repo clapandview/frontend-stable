@@ -4,6 +4,7 @@ import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
+import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/masks/gradient_mask.dart';
@@ -16,12 +17,11 @@ import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.isLoggedIn}) : super(key: key);
-
-  final bool isLoggedIn;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -55,6 +55,35 @@ class _HomePageState extends State<HomePage> {
     Provider.of<BroadcastController>(context, listen: false)
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
+    var phone = GetStorage().read('phone');
+    var name = GetStorage().read('name');
+    var nick = GetStorage().read('nick');
+
+    if (phone != null) {
+      Provider.of<UserController>(context, listen: false).auth(
+        User(
+          id: "",
+          phone: phone,
+          name: name,
+          username: nick,
+          age: 0,
+          following: [],
+          following_count: 0,
+          followers_count: 0,
+          description: "",
+          link: "",
+          fav_hashtags: [],
+          profile_pic: "basic",
+          gender: "",
+          gender_preference: [],
+          datetime_registration: DateTime.now().toString(),
+          balance: 0,
+          email: "",
+        ),
+      );
+
+      isLoggedIn = true;
+    }
     super.initState();
   }
 
@@ -113,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                             return GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                if (widget.isLoggedIn ||
+                                if (isLoggedIn ||
                                     index == 0 ||
                                     index == 1) {
                                   setState(() {

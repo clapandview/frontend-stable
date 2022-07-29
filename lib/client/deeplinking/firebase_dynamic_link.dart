@@ -1,5 +1,3 @@
-import 'package:clap_and_view/client/controllers/user_controller.dart';
-import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
@@ -7,7 +5,7 @@ import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get_storage/get_storage.dart';
 
 class FirebaseDynamicListService {
   static Future<String> createDynamicLink(bool isShort, String data) async {
@@ -65,37 +63,20 @@ class FirebaseDynamicListService {
     if (firstPathSegment == "tg-auth") {
       var parameters = deepLink.queryParameters;
       if (parameters["code"] == tgCode) {
+        isLoggedIn = true;
+
         if (kDebugMode) {
           print(parameters);
         }
-        isLoggedIn = true;
-        await Provider.of<UserController>(context, listen: false).auth(
-          User(
-            id: "",
-            phone: parameters["phone"]!,
-            name: parameters["name"]!,
-            username: parameters["telegram_username"]!,
-            age: 18,
-            following: [],
-            following_count: 0,
-            followers_count: 0,
-            description: "",
-            link: "",
-            fav_hashtags: [],
-            profile_pic: "basic",
-            gender: "",
-            gender_preference: [],
-            datetime_registration: DateTime.now().toString(),
-            balance: 0,
-            email: "",
-          ),
-        );
+
+        GetStorage().write('phone', parameters["phone"]!);
+        GetStorage().write('name', parameters["name"]!);
+        GetStorage().write('nick', parameters["telegram_username"]!);
+
         // ignore: use_build_context_synchronously
         Navigator.of(context).pushReplacement(
           FadeRoute(
-            page: HomePage(
-              isLoggedIn: isLoggedIn,
-            ),
+            page: const HomePage(),
           ),
         );
       }

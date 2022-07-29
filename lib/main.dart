@@ -2,7 +2,7 @@ import 'package:clap_and_view/client/controllers/category_controller.dart';
 import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
-import 'package:clap_and_view/frontend/pages/load.dart';
+import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: const LoadPage(),
+          home: const HomePage(),
         );
       },
     );
