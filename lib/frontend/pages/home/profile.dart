@@ -404,6 +404,10 @@ class _ProfilePageState extends State<ProfilePage> {
       Provider.of<UserController>(context, listen: false).follow(
           Provider.of<UserController>(context, listen: false).currentUser.id,
           widget.userId);
+      Provider.of<UserController>(context, listen: false)
+          .currentUser
+          .following
+          .add(widget.userId);
       user!.followers_count += 1;
       setState(() {
         isFollowing = true;
@@ -417,6 +421,10 @@ class _ProfilePageState extends State<ProfilePage> {
       Provider.of<UserController>(context, listen: false).unfollow(
           Provider.of<UserController>(context, listen: false).currentUser.id,
           widget.userId);
+      Provider.of<UserController>(context, listen: false)
+          .currentUser
+          .following
+          .remove(widget.userId);
       user!.followers_count -= 1;
       setState(() {
         isFollowing = false;
