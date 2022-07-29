@@ -92,12 +92,7 @@ class FirebaseDynamicListService {
           print(parameters);
         }
 
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).pushReplacement(
-          FadeRoute(
-            page: const HomePage(),
-          ),
-        );
+
       }
     }
   }

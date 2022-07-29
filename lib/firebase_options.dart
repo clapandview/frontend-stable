@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBTZW0XZDZmQXhVghAPXWpbGkkz-QzbvjU',
-    appId: '1:725005020954:android:43d265fdd81c470ab5c6a3',
+    appId: '1:725005020954:android:66f7db68640e1a33b5c6a3',
     messagingSenderId: '725005020954',
     projectId: 'clap-and-view-test',
     storageBucket: 'clap-and-view-test.appspot.com',
@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAybYw0hhLzlV8_pg6uBkdWSTvyS-RGOds',
-    appId: '1:725005020954:ios:da9fdd04cf561e8bb5c6a3',
+    appId: '1:725005020954:ios:5214a7dc62707d24b5c6a3',
     messagingSenderId: '725005020954',
     projectId: 'clap-and-view-test',
     storageBucket: 'clap-and-view-test.appspot.com',
