@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/controllers/category_controller.dart';
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
     var phone = GetStorage().read('phone');
-    getLinks();
+
 
     if (phone != null) {
       Provider.of<UserController>(context, listen: false).auth(
@@ -83,6 +84,9 @@ class _HomePageState extends State<HomePage> {
       );
 
       isLoggedIn = true;
+    }
+    else {
+      getLinks();
     }
     super.initState();
   }
@@ -206,6 +210,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   getLinks() async {
-    await FirebaseDynamicListService.initTgAuth(context, "1");
+    await FirebaseDynamicListService.initDeepLink(context, tgCode);
   }
 }

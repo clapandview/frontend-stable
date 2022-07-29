@@ -2,6 +2,7 @@ import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/constants.dart';
+import 'package:clap_and_view/frontend/pages/authentication/successful_auth.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -42,57 +43,60 @@ class FirebaseDynamicListService {
     return linkMessage;
   }
 
-  static Future<FadeRoute?> initTgAuth(
+  static Future<FadeRoute?> initDeepLink(
       BuildContext context, String tgCode) async {
     FirebaseDynamicLinks.instance.onLink.listen((dynamicLink) async {
       final Uri deepLink = dynamicLink.link;
-      tgAuthentification(context, deepLink, tgCode);
+      getFunction(context, deepLink, tgCode);
     });
     final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     if (data != null) {
       final Uri deepLink = data.link;
       // ignore: use_build_context_synchronously
-      tgAuthentification(context, deepLink, tgCode);
+      getFunction(context, deepLink, tgCode);
     }
     return null;
   }
 
-  static tgAuthentification(
-      BuildContext context, Uri deepLink, String tgCode) async {
+  static getFunction(BuildContext context, Uri deepLink, String tgCode) {
     String firstPathSegment = deepLink.pathSegments[0];
     if (firstPathSegment == "tg-auth") {
-      var parameters = deepLink.queryParameters;
-      if (true) {
-        Provider.of<UserController>(context, listen: false).auth(
-          User(
-            id: "",
-            phone: parameters["phone"]!,
-            name: parameters["name"]!,
-            username: parameters["telegram_username"]!,
-            age: 0,
-            following: [],
-            following_count: 0,
-            followers_count: 0,
-            description: "",
-            link: "",
-            fav_hashtags: [],
-            profile_pic: "basic",
-            gender: "",
-            gender_preference: [],
-            datetime_registration: DateTime.now().toString(),
-            balance: 0,
-            email: "",
-          ),
-        );
-        isLoggedIn = true;
+      tgAuth(context, deepLink, tgCode);
+    }
+  }
 
-        Navigator.of(context).pushReplacement(
-          FadeRoute(
-            page: const HomePage(),
-          ),
-        );
-      }
+  static tgAuth(BuildContext context, Uri deepLink, String tgCode) async {
+    var parameters = deepLink.queryParameters;
+    if (parameters["code"] == tgCode) {
+      Provider.of<UserController>(context, listen: false).auth(
+        User(
+          id: "",
+          phone: parameters["phone"]!,
+          name: parameters["name"]!,
+          username: parameters["telegram_username"]!,
+          age: 0,
+          following: [],
+          following_count: 0,
+          followers_count: 0,
+          description: "",
+          link: "",
+          fav_hashtags: [],
+          profile_pic: "basic",
+          gender: "",
+          gender_preference: [],
+          datetime_registration: DateTime.now().toString(),
+          balance: 0,
+          email: "",
+        ),
+      );
+      isLoggedIn = true;
+
+      Navigator.of(context).pushReplacement(
+        FadeRoute(
+          page: SuccessfulAuthPage(name: parameters["name"]!),
+        ),
+      );
     }
   }
 }

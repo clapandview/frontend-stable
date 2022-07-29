@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,3 +17,19 @@ double kMainTxtSize = 18.sp;
 
 // User Status
 bool isLoggedIn = false;
+
+//Code to auth user links
+String tgCode = getRandomString(30);
+
+String getRandomString(int length) {
+  const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+  final Random r = Random();
+  return String.fromCharCodes(
+    Iterable.generate(
+      length,
+          (_) => ch.codeUnitAt(
+        r.nextInt(ch.length),
+      ),
+    ),
+  );
+}

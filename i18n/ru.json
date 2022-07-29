@@ -36,5 +36,7 @@
     "enter_tags": "Введи теги",
     "you_have_already_entered_that": "Вы уже ввели это",
     "type_first_message": "Напишите первым",
-    "type_new_message": "Написать сообщение"
+    "type_new_message": "Написать сообщение",
+    "successful_registration": "Успешная регистрацию",
+    "Finish_registration": "Завершить регистрацию"
 }

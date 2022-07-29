@@ -20,11 +20,8 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  late String tgCode;
-
   @override
   void initState() {
-    tgCode = getRandomString(30);
     super.initState();
   }
 
@@ -101,19 +98,6 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   getLinks() async {
-    await FirebaseDynamicListService.initTgAuth(context, tgCode);
-  }
-
-  String getRandomString(int length) {
-    const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
-    final Random r = Random();
-    return String.fromCharCodes(
-      Iterable.generate(
-        length,
-        (_) => ch.codeUnitAt(
-          r.nextInt(ch.length),
-        ),
-      ),
-    );
+    await FirebaseDynamicListService.initDeepLink(context, tgCode);
   }
 }
