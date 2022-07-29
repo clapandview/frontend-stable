@@ -5,7 +5,6 @@ import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -88,11 +87,11 @@ class FirebaseDynamicListService {
         );
         isLoggedIn = true;
 
-        if (kDebugMode) {
-          print(parameters);
-        }
-
-
+        Navigator.of(context).pushReplacement(
+          FadeRoute(
+            page: const HomePage(),
+          ),
+        );
       }
     }
   }
