@@ -57,8 +57,18 @@ class _HomePageState extends State<HomePage> {
     Provider.of<BroadcastController>(context, listen: false)
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
+
+
+    var _tgCode = GetStorage().read("tgCode");
+    if (_tgCode == null) {
+      tgCode = getRandomString(30);
+    }
+    else {
+      tgCode = _tgCode;
+    }
+
     var phone = GetStorage().read('phone');
-    
+
     getLinks();
 
     if (phone != null) {
@@ -209,5 +219,18 @@ class _HomePageState extends State<HomePage> {
 
   getLinks() async {
     await FirebaseDynamicListService.initDeepLink(context, tgCode);
+  }
+
+  String getRandomString(int length) {
+    const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    final Random r = Random();
+    return String.fromCharCodes(
+      Iterable.generate(
+        length,
+        (_) => ch.codeUnitAt(
+          r.nextInt(ch.length),
+        ),
+      ),
+    );
   }
 }

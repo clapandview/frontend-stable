@@ -89,7 +89,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   maxLines: 1,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: kMainTxtSize * 1.5,
+                    fontSize: 22.sp,
                     fontFamily: "SFProDisplayBold",
                   ),
                 ),
@@ -99,7 +99,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     color: Colors.transparent,
                     height: 30.w,
                     width: 30.w,
-                    child: const Icon(
+                    child: Icon(
+                      size: 22.w,
                       ClapAndViewIcons.arrow_right_from_bracket_solid,
                       color: Colors.black,
                     ),
