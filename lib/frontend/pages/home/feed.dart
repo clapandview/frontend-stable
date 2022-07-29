@@ -197,13 +197,15 @@ class _FeedPageState extends State<FeedPage> {
         } else if (Provider.of<CategoryController>(context, listen: false)
                 .currentCategory ==
             "subscriptions") {
-          await Provider.of<BroadcastController>(context, listen: false)
-              .loadNextPageFollowing(
-            List<String>.from(
-                Provider.of<UserController>(context, listen: false)
-                    .currentUser
-                    .following),
-          );
+          if (isLoggedIn) {
+            await Provider.of<BroadcastController>(context, listen: false)
+                .loadNextPageFollowing(
+              List<String>.from(
+                  Provider.of<UserController>(context, listen: false)
+                      .currentUser
+                      .following),
+            );
+          }
         } else {
           await Provider.of<BroadcastController>(context, listen: false)
               .loadNextPageHash(
