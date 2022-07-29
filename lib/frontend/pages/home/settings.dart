@@ -80,9 +80,9 @@ class _SettingsPageState extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: kToolbarHeight,
-                  width: kToolbarHeight,
+                SizedBox(
+                  height: 30.w,
+                  width: 30.w,
                 ),
                 AutoSizeText(
                   AppLocalizations.of(context)!.translate('settings'),
@@ -97,8 +97,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   onTap: exit,
                   child: Container(
                     color: Colors.transparent,
-                    height: 20.w,
-                    width: 20.w,
+                    height: 30.w,
+                    width: 30.w,
                     child: const Icon(
                       ClapAndViewIcons.arrow_right_from_bracket_solid,
                       color: Colors.black,
