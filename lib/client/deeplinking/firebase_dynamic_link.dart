@@ -3,10 +3,10 @@ import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
 import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/authentication/successful_auth.dart';
-import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class FirebaseDynamicListService {
@@ -62,7 +62,6 @@ class FirebaseDynamicListService {
   static getFunction(BuildContext context, Uri deepLink, String tgCode) {
     String firstPathSegment = deepLink.pathSegments[0];
     if (firstPathSegment == "tg-auth") {
-      print(deepLink.query);
       tgAuth(context, deepLink, tgCode);
     }
   }
@@ -93,6 +92,8 @@ class FirebaseDynamicListService {
       );
       isLoggedIn = true;
 
+      GetStorage().remove("tgCode");
+      
       Navigator.of(context).pushReplacement(
         FadeRoute(
           page: SuccessfulAuthPage(name: parameters["name"]!),

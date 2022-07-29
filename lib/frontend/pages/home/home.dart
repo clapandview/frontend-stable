@@ -58,13 +58,8 @@ class _HomePageState extends State<HomePage> {
         .loadFirstPageSmart("", "");
     Provider.of<CategoryController>(context, listen: false).loadCategories();
 
-
-    var _tgCode = GetStorage().read("tgCode");
-    if (_tgCode == null) {
-      tgCode = getRandomString(30);
-    }
-    else {
-      tgCode = _tgCode;
+    if (GetStorage().read("tgCode") == null) {
+      GetStorage().write("tgCode", getRandomString(30));
     }
 
     var phone = GetStorage().read('phone');
@@ -218,6 +213,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   getLinks() async {
+    var tgCode = GetStorage().read("tgCode");
     await FirebaseDynamicListService.initDeepLink(context, tgCode);
   }
 

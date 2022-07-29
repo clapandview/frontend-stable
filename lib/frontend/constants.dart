@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,4 +18,4 @@ double kMainTxtSize = 18.sp;
 bool isLoggedIn = false;
 
 //Code to auth user links
-late String tgCode;
+//late String tgCode;

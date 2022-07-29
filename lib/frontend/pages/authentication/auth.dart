@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:clap_and_view/client/deeplinking/firebase_dynamic_link.dart';
 import 'package:clap_and_view/frontend/clap_and_view_icons_icons.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/constants.dart';
@@ -10,6 +7,7 @@ import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthPage extends StatefulWidget {
@@ -74,7 +72,7 @@ class _AuthPageState extends State<AuthPage> {
                       onTap: authTelegram,
                       text: AppLocalizations.of(context)!
                           .translate('auth_with_tg'),
-                      height: kToolbarHeight / 1.2,
+                      height: kToolbarHeight / 1.3,
                       width: MediaQuery.of(context).size.width,
                       borderRadius: 15.r,
                       color1: telegramColor,
@@ -92,12 +90,9 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   authTelegram() {
+    var tgCode = GetStorage().read("tgCode");
     final Uri url =
         Uri.parse('https://t.me/clapandview_dev_bot/?start=$tgCode');
     launchUrl(url, mode: LaunchMode.externalApplication);
-  }
-
-  getLinks() async {
-    await FirebaseDynamicListService.initDeepLink(context, tgCode);
   }
 }

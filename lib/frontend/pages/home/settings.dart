@@ -10,7 +10,6 @@ import 'package:clap_and_view/frontend/logic/app_localizations.dart';
 import 'package:clap_and_view/frontend/pages/home/home.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/button.dart';
-import 'package:clap_and_view/frontend/common_ui_elements/header.dart';
 import 'package:clap_and_view/frontend/common_ui_elements/text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,37 +75,39 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 30.w,
-                  width: 30.w,
-                ),
-                AutoSizeText(
-                  AppLocalizations.of(context)!.translate('settings'),
-                  maxLines: 1,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22.sp,
-                    fontFamily: "SFProDisplayBold",
+            SizedBox(
+              height: kToolbarHeight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: 30.r,
+                    width: 30.r,
                   ),
-                ),
-                GestureDetector(
-                  onTap: exit,
-                  child: Container(
-                    color: Colors.transparent,
-                    height: 30.w,
-                    width: 30.w,
-                    child: Icon(
-                      size: 22.w,
-                      ClapAndViewIcons.arrow_right_from_bracket_solid,
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.translate('settings'),
+                    maxLines: 1,
+                    style: TextStyle(
                       color: Colors.black,
+                      fontSize: 22.sp,
+                      fontFamily: "SFProDisplayBold",
                     ),
                   ),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: exit,
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 30.r,
+                      width: 30.r,
+                      child: Icon(
+                        size: 22.w,
+                        ClapAndViewIcons.arrow_right_from_bracket_solid,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Row(
               children: [
@@ -130,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   child: CustomButton(
                     onTap: () => startImagePicker(),
                     text: AppLocalizations.of(context)!.translate('change'),
-                    height: kToolbarHeight / 1.2,
+                    height: kToolbarHeight / 1.3,
                     width: MediaQuery.of(context).size.width,
                     borderRadius: 15.r,
                     color1: accentColor,
@@ -204,7 +205,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   : _selectDate(context),
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: kToolbarHeight / 1.2,
+                height: kToolbarHeight / 1.3,
                 padding: EdgeInsets.only(
                   left: 15.r,
                   right: 15.r,
@@ -315,7 +316,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               text: AppLocalizations.of(context)!.translate('save'),
-              height: kToolbarHeight / 1.2,
+              height: kToolbarHeight / 1.3,
               width: MediaQuery.of(context).size.width,
               borderRadius: 15.r,
               color1: accentColor,

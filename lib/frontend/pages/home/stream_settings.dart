@@ -79,7 +79,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                       maxLines: 1,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: kMainTxtSize,
+                        fontSize: 22.sp,
                         fontFamily: "SFProDisplaySemibold",
                       ),
                     ),
@@ -123,7 +123,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                             onTap: () => startImagePicker(),
                             text: AppLocalizations.of(context)!
                                 .translate('change'),
-                            height: kToolbarHeight / 1.2,
+                            height: kToolbarHeight / 1.3,
                             width: MediaQuery.of(context).size.width,
                             borderRadius: 15.r,
                             color1: accentColor,
@@ -433,7 +433,7 @@ class _StreamSettingsState extends State<StreamSettings> {
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                       text: AppLocalizations.of(context)!.translate('save'),
-                      height: kToolbarHeight / 1.2,
+                      height: kToolbarHeight / 1.3,
                       width: MediaQuery.of(context).size.width,
                       borderRadius: 15.r,
                       color1: accentColor,

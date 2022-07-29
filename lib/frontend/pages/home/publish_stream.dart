@@ -376,7 +376,7 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                         .translate('finish_broadcast')
                     : AppLocalizations.of(context)!
                         .translate('start_broadcast'),
-                height: kToolbarHeight / 1.2,
+                height: kToolbarHeight / 1.3,
                 width: MediaQuery.of(context).size.width,
                 borderRadius: 15.r,
                 color1: accentColor,

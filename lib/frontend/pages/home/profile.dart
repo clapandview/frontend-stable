@@ -193,8 +193,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                           height: kToolbarHeight / 1.5,
                                           width: 130.w,
                                           borderRadius: 12.r,
-                                          color1: accentColor,
-                                          color2: accentColorTwo,
+                                          color1: (isLoggedIn)
+                                              ? accentColor
+                                              : Colors.grey,
+                                          color2: (isLoggedIn)
+                                              ? accentColorTwo
+                                              : Colors.grey,
                                           loading: false,
                                         ),
                                   SizedBox(
