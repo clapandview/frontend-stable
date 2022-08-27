@@ -1,7 +1,6 @@
 import 'package:clap_and_view/client/controllers/user_controller.dart';
 import 'package:clap_and_view/client/models/user.dart';
 import 'package:clap_and_view/client/utils/config.dart';
-import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/pages/authentication/successful_auth.dart';
 import 'package:clap_and_view/frontend/transitions/transition_fade.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -90,7 +89,8 @@ class FirebaseDynamicListService {
           email: "",
         ),
       );
-      isLoggedIn = true;
+
+      GetStorage().write('isLoggedIn', true);
 
       GetStorage().remove("tgCode");
       

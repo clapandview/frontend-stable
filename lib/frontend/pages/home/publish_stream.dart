@@ -33,7 +33,6 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
   bool loading = false;
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
-  bool _isStreaming = false;
   bool _micOn = true;
   final cron = Cron();
 
@@ -104,14 +103,14 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
         switch (state) {
           case HelperState.CallStateNew:
             setState(() {
-              _isStreaming = true;
+              isStreaming = true;
             });
             break;
           case HelperState.CallStateBye:
             setState(() {
               _localRenderer.srcObject = null;
               _remoteRenderer.srcObject = null;
-              _isStreaming = false;
+              isStreaming = false;
             });
             break;
           case HelperState.ConnectionClosed:
@@ -192,201 +191,211 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(builder: (context, orientation) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(15.r),
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Positioned(
-              left: 0.0,
-              right: 0.0,
-              top: 0.0,
-              bottom: 0.0,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(color: darkGreyColor),
-                child: RTCVideoView(_remoteRenderer),
-              ),
-            ),
-            (_isStreaming)
-                ? const Positioned(
-                    left: 0.0,
-                    right: 0.0,
-                    top: 0.0,
-                    bottom: 0.0,
-                    child: SizedBox(),
-                  )
-                : Container(
-                    width: MediaQuery.of(context).size.width - kMainSpacing * 2,
-                    padding: EdgeInsets.all(kMainSpacing),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15.r),
-                      ),
-                      color: Colors.black.withOpacity(0.75),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AutoSizeText(
-                          AppLocalizations.of(context)!
-                              .translate('before_going_live'),
-                          maxLines: 1,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: kMainTxtSize,
-                            fontFamily: "SFProDisplaySemibold",
-                          ),
-                        ),
-                        SizedBox(
-                          height: kMainSpacing,
-                        ),
-                        AutoSizeText(
-                          AppLocalizations.of(context)!
-                              .translate('check_stream_settings'),
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: kMainTxtSize,
-                            fontFamily: "SFProDisplayMedium",
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15.r,
-                        ),
-                        AutoSizeText(
-                          AppLocalizations.of(context)!
-                              .translate('check_permissions'),
-                          maxLines: 2,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: kMainTxtSize,
-                            fontFamily: "SFProDisplayMedium",
-                          ),
-                        ),
-                        SizedBox(
-                          height: kMainSpacing,
-                        ),
-                      ],
-                    ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: OrientationBuilder(
+        builder: (context, orientation) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(15.r),
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Positioned(
+                  left: 0.0,
+                  right: 0.0,
+                  top: 0.0,
+                  bottom: 0.0,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(color: darkGreyColor),
+                    child: RTCVideoView(_remoteRenderer),
                   ),
-            Positioned(
-              top: kMainSpacing,
-              right: kMainSpacing,
-              child: Row(
-                children: [
-                  (_isStreaming)
-                      ? Row(
+                ),
+                (isStreaming)
+                    ? const Positioned(
+                        left: 0.0,
+                        right: 0.0,
+                        top: 0.0,
+                        bottom: 0.0,
+                        child: SizedBox(),
+                      )
+                    : Container(
+                        width: MediaQuery.of(context).size.width -
+                            kMainSpacing * 2,
+                        padding: EdgeInsets.all(kMainSpacing),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15.r),
+                          ),
+                          color: Colors.black.withOpacity(0.75),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            CustomCircleButton(
-                              onTap: () => _muteMic(_micOn),
-                              icon: _micOn
-                                  ? ClapAndViewIcons.camera_change
-                                  : ClapAndViewIcons.camera_change,
-                              color: Colors.black.withOpacity(0.75),
-                              colorIcon: Colors.white,
+                            AutoSizeText(
+                              AppLocalizations.of(context)!
+                                  .translate('before_going_live'),
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: kMainTxtSize,
+                                fontFamily: "SFProDisplaySemibold",
+                              ),
                             ),
                             SizedBox(
-                              width: kMainSpacing,
+                              height: kMainSpacing,
                             ),
-                            CustomCircleButton(
-                              onTap: () => _switchCamera(),
-                              icon: ClapAndViewIcons.camera_change,
-                              color: Colors.black.withOpacity(0.75),
-                              colorIcon: Colors.white,
+                            AutoSizeText(
+                              AppLocalizations.of(context)!
+                                  .translate('check_stream_settings'),
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: kMainTxtSize,
+                                fontFamily: "SFProDisplayMedium",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.r,
+                            ),
+                            AutoSizeText(
+                              AppLocalizations.of(context)!
+                                  .translate('check_permissions'),
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: kMainTxtSize,
+                                fontFamily: "SFProDisplayMedium",
+                              ),
+                            ),
+                            SizedBox(
+                              height: kMainSpacing,
                             ),
                           ],
-                        )
-                      : SizedBox(
-                          height: kMainSpacing,
-                          width: kMainSpacing,
                         ),
-                  SizedBox(
-                    width: kMainSpacing,
-                  ),
-                  CustomCircleButton(
-                    onTap: () => Navigator.of(context).push(
-                      SlideRoute(
-                        page: const StreamSettings(),
                       ),
-                    ),
-                    icon: ClapAndViewIcons.setting,
-                    color: Colors.black.withOpacity(0.75),
-                    colorIcon: Colors.white,
+                Positioned(
+                  top: kMainSpacing,
+                  right: kMainSpacing,
+                  child: Row(
+                    children: [
+                      (isStreaming)
+                          ? Row(
+                              children: [
+                                CustomCircleButton(
+                                  onTap: () => _muteMic(_micOn),
+                                  icon: _micOn
+                                      ? ClapAndViewIcons.microphone
+                                      : ClapAndViewIcons.microphone_slash,
+                                  color: Colors.black.withOpacity(0.75),
+                                  colorIcon: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: kMainSpacing,
+                                ),
+                                CustomCircleButton(
+                                  onTap: () => _switchCamera(),
+                                  icon: ClapAndViewIcons.camera_change,
+                                  color: Colors.black.withOpacity(0.75),
+                                  colorIcon: Colors.white,
+                                ),
+                              ],
+                            )
+                          : SizedBox(
+                              height: kMainSpacing,
+                              width: kMainSpacing,
+                            ),
+                      SizedBox(
+                        width: kMainSpacing,
+                      ),
+                      CustomCircleButton(
+                        onTap: () => Navigator.of(context).push(
+                          SlideRoute(
+                            page: const StreamSettings(),
+                          ),
+                        ),
+                        icon: ClapAndViewIcons.setting,
+                        color: Colors.black.withOpacity(0.75),
+                        colorIcon: Colors.white,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: kMainSpacing,
-              left: kMainSpacing,
-              right: kMainSpacing,
-              child: CustomButton(
-                onTap: () async {
-                  setState(() {
-                    loading = !loading;
-                  });
+                ),
+                Positioned(
+                  bottom: kMainSpacing,
+                  left: kMainSpacing,
+                  right: kMainSpacing,
+                  child: CustomButton(
+                    onTap: () async {
+                      setState(() {
+                        loading = !loading;
+                      });
 
-                  if (_isStreaming) {
-                    Provider.of<BroadcastController>(context, listen: false)
-                        .currentStream
-                        .status = 3;
-                    await cron.close();
-                    _finish();
-                  } else {
-                    Provider.of<BroadcastController>(context, listen: false)
-                        .currentStream
-                        .status = 2;
+                      if (isStreaming) {
+                        Provider.of<BroadcastController>(context, listen: false)
+                            .currentStream
+                            .status = 3;
+                        await cron.close();
+                        _finish();
+                      } else {
+                        Provider.of<BroadcastController>(context, listen: false)
+                            .currentStream
+                            .status = 2;
 
-                    cron.schedule(Schedule.parse('10-20 * * * *'), () async {
-                      Provider.of<BroadcastController>(context, listen: false)
-                          .currentStream
-                          .smart_score = await Provider.of<SessionController>(
-                              context,
-                              listen: false)
-                          .calculateAverageTimeWatched(
-                              Provider.of<BroadcastController>(context,
+                        cron.schedule(Schedule.parse('10-20 * * * *'),
+                            () async {
+                          Provider.of<BroadcastController>(context,
                                       listen: false)
                                   .currentStream
-                                  .id);
+                                  .smart_score =
+                              await Provider.of<SessionController>(context,
+                                      listen: false)
+                                  .calculateAverageTimeWatched(
+                                      Provider.of<BroadcastController>(context,
+                                              listen: false)
+                                          .currentStream
+                                          .id);
+                          await Provider.of<BroadcastController>(context,
+                                  listen: false)
+                              .updateSmartScore(
+                                  Provider.of<BroadcastController>(context,
+                                          listen: false)
+                                      .currentStream);
+                        });
+                        _connect();
+                      }
+
                       await Provider.of<BroadcastController>(context,
                               listen: false)
-                          .updateSmartScore(Provider.of<BroadcastController>(
+                          .updateStatus(Provider.of<BroadcastController>(
                                   context,
                                   listen: false)
                               .currentStream);
-                    });
-                    _connect();
-                  }
-
-                  await Provider.of<BroadcastController>(context, listen: false)
-                      .updateStatus(Provider.of<BroadcastController>(context,
-                              listen: false)
-                          .currentStream);
-                  setState(() {
-                    loading = !loading;
-                  });
-                },
-                text: (_isStreaming)
-                    ? AppLocalizations.of(context)!
-                        .translate('finish_broadcast')
-                    : AppLocalizations.of(context)!
-                        .translate('start_broadcast'),
-                height: kToolbarHeight / 1.3,
-                width: MediaQuery.of(context).size.width,
-                borderRadius: 15.r,
-                color1: accentColor,
-                color2: accentColorTwo,
-                loading: loading,
-              ),
+                      setState(() {
+                        loading = !loading;
+                      });
+                    },
+                    text: (isStreaming)
+                        ? AppLocalizations.of(context)!
+                            .translate('finish_broadcast')
+                        : AppLocalizations.of(context)!
+                            .translate('start_broadcast'),
+                    height: kToolbarHeight / 1.3,
+                    width: MediaQuery.of(context).size.width,
+                    borderRadius: 15.r,
+                    color1: accentColor,
+                    color2: accentColorTwo,
+                    loading: loading,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    });
+          );
+        },
+      ),
+    );
   }
 }

@@ -13,6 +13,7 @@
     "change": "Change",
     "save": "Save",
     "search": "Search...",
+    "search_t": "Search",
     "all": "All",
     "start_broadcast": "Start broadcast",
     "finish_broadcast": "Finish broadcast",
@@ -38,5 +39,6 @@
     "type_first_message": "Type first message",
     "type_new_message": "Type new message",
     "successful_registration": "Successful registration",
-    "finish_registration": "Finish registration"
+    "finish_registration": "Finish registration",
+    "home": "Home"
 }

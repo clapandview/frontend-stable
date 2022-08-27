@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -197,7 +198,7 @@ class _FeedPageState extends State<FeedPage> {
         } else if (Provider.of<CategoryController>(context, listen: false)
                 .currentCategory ==
             "subscriptions") {
-          if (isLoggedIn) {
+          if (GetStorage().read('isLoggedIn')) {
             await Provider.of<BroadcastController>(context, listen: false)
                 .loadNextPageFollowing(
               List<String>.from(

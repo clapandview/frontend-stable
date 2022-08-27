@@ -21,6 +21,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -231,7 +232,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                                   children: [
                                     Expanded(
                                       child: MessageBuilderForStream(
-                                        myIdUser: (isLoggedIn)
+                                        myIdUser: (GetStorage().read('isLoggedIn'))
                                             ? Provider.of<UserController>(
                                                     context,
                                                     listen: false)
@@ -242,7 +243,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                                       ),
                                     ),
                                     ChatNewMessage(
-                                      idUser: (isLoggedIn)
+                                      idUser: (GetStorage().read('isLoggedIn'))
                                           ? Provider.of<UserController>(context,
                                                   listen: false)
                                               .currentUser
@@ -260,7 +261,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
                           FirebaseApi.createGroup(
                             Group(
                               id: "",
-                              id_creator: (isLoggedIn)
+                              id_creator: (GetStorage().read('isLoggedIn'))
                                   ? Provider.of<UserController>(context,
                                           listen: false)
                                       .currentUser

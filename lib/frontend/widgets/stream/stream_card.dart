@@ -47,7 +47,7 @@ class _StreamCardState extends State<StreamCard>
       onTap: () {
         Meta meta = Meta(
             status: 0,
-            user_id: (isLoggedIn)
+            user_id: (GetStorage().read('isLoggedIn'))
                 ? Provider.of<UserController>(context, listen: false)
                     .currentUser
                     .id
@@ -62,7 +62,7 @@ class _StreamCardState extends State<StreamCard>
           SlideRoute(
             page: WatchStreamPage(
               id: widget.streamModel.id,
-              userId: (isLoggedIn)
+              userId: (GetStorage().read('isLoggedIn'))
                   ? Provider.of<UserController>(context, listen: false)
                       .currentUser
                       .id
@@ -77,6 +77,7 @@ class _StreamCardState extends State<StreamCard>
           children: [
             CachedNetworkImage(
               height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               imageUrl:
                   "${baseUrl}stream/DownloadThumbnail/${widget.streamModel.thumbnail}",
               fit: BoxFit.cover,

@@ -13,8 +13,8 @@ import 'package:clap_and_view/frontend/masks/gradient_mask.dart';
 import 'package:clap_and_view/frontend/pages/authentication/auth.dart';
 import 'package:clap_and_view/frontend/pages/home/feed.dart';
 import 'package:clap_and_view/frontend/pages/home/publish_stream.dart';
-import 'package:clap_and_view/frontend/pages/home/search.dart';
 import 'package:clap_and_view/frontend/pages/home/settings.dart';
+import 'package:clap_and_view/frontend/pages/home/video_feed.dart';
 import 'package:clap_and_view/frontend/transitions/transition_slide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,14 +35,14 @@ class _HomePageState extends State<HomePage> {
 
   List<IconData> icons = [
     ClapAndViewIcons.estate,
-    ClapAndViewIcons.search,
+    ClapAndViewIcons.webcam,
     ClapAndViewIcons.plus_circle,
     ClapAndViewIcons.user,
   ];
 
   late List<Widget> pages = [
+    const VideoFeedPage(),
     const FeedPage(),
-    const SearchPage(),
     const PublishStreamPage(),
     const SettingsPage(),
   ];
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         ),
       );
 
-      isLoggedIn = true;
+      GetStorage().write('isLoggedIn', true);
     }
     super.initState();
   }
@@ -113,12 +113,16 @@ class _HomePageState extends State<HomePage> {
               : Brightness.dark,
           statusBarColor: (selectedIndex == pages.length - 1)
               ? Colors.white
-              : darkerGreyColor,
+              : (selectedIndex == 0)
+                  ? Colors.black
+                  : darkerGreyColor,
         ),
         child: Scaffold(
           backgroundColor: (selectedIndex == pages.length - 1)
               ? Colors.white
-              : darkerGreyColor,
+              : (selectedIndex == 0)
+                  ? Colors.black
+                  : darkerGreyColor,
           body: Stack(
             children: [
               SafeArea(
@@ -131,67 +135,82 @@ class _HomePageState extends State<HomePage> {
                         children: pages,
                       ),
                     ),
-                    Container(
-                      height: kBottomNavigationBarHeight,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.only(
-                        left: 15.r,
-                        right: 15.r,
-                      ),
-                      color: (selectedIndex == pages.length - 1)
-                          ? Colors.white
-                          : darkerGreyColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List<Widget>.generate(
-                          pages.length,
-                          (int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                if (isLoggedIn || index == 0 || index == 1) {
-                                  setState(() {
-                                    selectedIndex = index;
-                                  });
-                                  _pageController.jumpToPage(index);
-                                } else if (index == 2 || index == 3) {
-                                  Navigator.of(context).push(
-                                    SlideRoute(
-                                      page: const AuthPage(),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: Container(
-                                color: Colors.transparent,
-                                height: kBottomNavigationBarHeight,
-                                width:
-                                    (MediaQuery.of(context).size.width - 30.r) /
+                    Stack(
+                      children: [
+                        Container(
+                          height: kBottomNavigationBarHeight,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.only(
+                            left: 15.r,
+                            right: 15.r,
+                          ),
+                          color: (selectedIndex == pages.length - 1)
+                              ? Colors.white
+                              : (selectedIndex == 0)
+                                  ? Colors.black
+                                  : darkerGreyColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List<Widget>.generate(
+                              pages.length,
+                              (int index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(context).unfocus();
+                                    if (GetStorage().read('isLoggedIn') ||
+                                        index == 0 ||
+                                        index == 1) {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                      _pageController.jumpToPage(index);
+                                    } else if (index == 2 || index == 3) {
+                                      Navigator.of(context).push(
+                                        SlideRoute(
+                                          page: const AuthPage(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: Container(
+                                    color: Colors.transparent,
+                                    height: kBottomNavigationBarHeight,
+                                    width: (MediaQuery.of(context).size.width -
+                                            30.r) /
                                         pages.length,
-                                child: (selectedIndex == pages.length - 1)
-                                    ? (selectedIndex == index)
-                                        ? RadiantGradientMask(
-                                            child: Icon(
-                                              icons[index],
-                                              color: Colors.white,
-                                            ),
-                                          )
+                                    child: (selectedIndex == pages.length - 1)
+                                        ? (selectedIndex == index)
+                                            ? RadiantGradientMask(
+                                                child: Icon(
+                                                  icons[index],
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            : Icon(
+                                                icons[index],
+                                                color: Colors.black
+                                                    .withOpacity(0.3),
+                                              )
                                         : Icon(
                                             icons[index],
-                                            color:
-                                                Colors.black.withOpacity(0.3),
-                                          )
-                                    : Icon(
-                                        icons[index],
-                                        color: (selectedIndex == index)
-                                            ? Colors.white
-                                            : lightGreyColor,
-                                      ),
-                              ),
-                            );
-                          },
+                                            color: (selectedIndex == index)
+                                                ? Colors.white
+                                                : lightGreyColor,
+                                          ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                        (isStreaming)
+                            ? Container(
+                                height: kBottomNavigationBarHeight,
+                                width: MediaQuery.of(context).size.width,
+                                color: darkerGreyColor.withOpacity(0.75),
+                              )
+                            : Container(),
+                      ],
                     ),
                   ],
                 ),
@@ -202,7 +221,9 @@ class _HomePageState extends State<HomePage> {
                   height: MediaQuery.of(context).padding.bottom,
                   color: (selectedIndex == pages.length - 1)
                       ? Colors.white
-                      : darkerGreyColor,
+                      : (selectedIndex == 0)
+                          ? Colors.black
+                          : darkerGreyColor,
                 ),
               ),
             ],

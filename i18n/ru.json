@@ -13,6 +13,7 @@
     "change": "Изменить",
     "save": "Сохранить",
     "search": "Поиск...",
+    "search_t": "Поиск",
     "all": "Все",
     "start_broadcast": "Начать трансляцию",
     "finish_broadcast": "Завершить трансляцию",
@@ -38,5 +39,6 @@
     "type_first_message": "Напишите первым",
     "type_new_message": "Написать сообщение",
     "successful_registration": "Успешная регистрация",
-    "finish_registration": "Завершить регистрацию"
+    "finish_registration": "Завершить регистрацию",
+    "home": "Главная"
 }

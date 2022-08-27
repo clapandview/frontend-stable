@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCdKFKX81pN1b08kVloeigAVim4vYD3GJ4',
+    appId: '1:725005020954:web:deb199c65081d322b5c6a3',
+    messagingSenderId: '725005020954',
+    projectId: 'clap-and-view-test',
+    authDomain: 'clap-and-view-test.firebaseapp.com',
+    storageBucket: 'clap-and-view-test.appspot.com',
+    measurementId: 'G-SNVCNLKX47',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBTZW0XZDZmQXhVghAPXWpbGkkz-QzbvjU',
     appId: '1:725005020954:android:66f7db68640e1a33b5c6a3',
@@ -58,6 +62,17 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAybYw0hhLzlV8_pg6uBkdWSTvyS-RGOds',
+    appId: '1:725005020954:ios:5214a7dc62707d24b5c6a3',
+    messagingSenderId: '725005020954',
+    projectId: 'clap-and-view-test',
+    storageBucket: 'clap-and-view-test.appspot.com',
+    androidClientId: '725005020954-1h3die4juoh3deke76c14j81lq97p0u3.apps.googleusercontent.com',
+    iosClientId: '725005020954-h2i94cbih6qbit2gjk1mn2qfac04v1us.apps.googleusercontent.com',
+    iosBundleId: 'com.georgekobylyanskiy.clapAndView',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyAybYw0hhLzlV8_pg6uBkdWSTvyS-RGOds',
     appId: '1:725005020954:ios:5214a7dc62707d24b5c6a3',
     messagingSenderId: '725005020954',

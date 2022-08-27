@@ -14,8 +14,5 @@ Color telegramColorTwo = const Color.fromRGBO(0, 136, 204, 1);
 double kMainSpacing = 20.r;
 double kMainTxtSize = 18.sp;
 
-// User Status
-bool isLoggedIn = false;
-
-//Code to auth user links
-//late String tgCode;
+// Stream Status
+bool isStreaming = false;

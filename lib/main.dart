@@ -18,6 +18,8 @@ void main() async {
   await GetStorage.init();
   await Firebase.initializeApp();
 
+  GetStorage().write('isLoggedIn', false);
+
   runApp(
     MultiProvider(
       providers: [

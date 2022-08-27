@@ -193,10 +193,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                           height: kToolbarHeight / 1.5,
                                           width: 130.w,
                                           borderRadius: 12.r,
-                                          color1: (isLoggedIn)
+                                          color1: (GetStorage().read('isLoggedIn'))
                                               ? accentColor
                                               : Colors.grey,
-                                          color2: (isLoggedIn)
+                                          color2: (GetStorage().read('isLoggedIn'))
                                               ? accentColorTwo
                                               : Colors.grey,
                                           loading: false,
@@ -400,7 +400,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void follow() {
-    if (isLoggedIn) {
+    if (GetStorage().read('isLoggedIn')) {
       Provider.of<UserController>(context, listen: false).follow(
           Provider.of<UserController>(context, listen: false).currentUser.id,
           widget.userId);
@@ -417,7 +417,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void unfollow() {
-    if (isLoggedIn) {
+    if (GetStorage().read('isLoggedIn')) {
       Provider.of<UserController>(context, listen: false).unfollow(
           Provider.of<UserController>(context, listen: false).currentUser.id,
           widget.userId);
@@ -447,7 +447,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void checkIfFollowing() {
-    if (isLoggedIn) {
+    if (GetStorage().read('isLoggedIn')) {
       Provider.of<UserController>(context, listen: false)
           .currentUser
           .following

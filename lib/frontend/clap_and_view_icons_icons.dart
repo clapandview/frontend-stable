@@ -21,21 +21,19 @@ class ClapAndViewIcons {
   static const _kFontFam = 'ClapAndViewIcons';
   static const String? _kFontPkg = null;
 
-  // ignore: constant_identifier_names
   static const IconData camera_change = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData estate = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData search = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData multiply = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData setting = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  // ignore: constant_identifier_names
+  static const IconData microphone = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData users_alt = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  // ignore: constant_identifier_names
   static const IconData plus_circle = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData user = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData comment = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  // ignore: constant_identifier_names
-  static const IconData angle_left_no_space = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  // ignore: constant_identifier_names
-  static const IconData arrow_right_from_bracket_solid = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData message_45 = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData arrow_right_from_bracket_solid = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData microphone_slash = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData webcam = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData angle_left_no_space = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

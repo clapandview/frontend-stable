@@ -385,7 +385,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   void exit() {
     GetStorage().write('phone', null);
-    isLoggedIn = false;
+    GetStorage().write('isLoggedIn', false);
     Navigator.of(context).pushReplacement(
       SlideRoute(
         page: const HomePage(),
