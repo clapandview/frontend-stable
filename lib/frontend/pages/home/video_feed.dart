@@ -22,7 +22,6 @@ class _VideoFeedPageState extends State<VideoFeedPage> {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          // Content
           Container(
             height: kToolbarHeight,
             padding: const EdgeInsets.only(right: 5.0, left: 5.0),

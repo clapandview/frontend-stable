@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   List<IconData> icons = [
     ClapAndViewIcons.estate,
-    ClapAndViewIcons.webcam,
+    ClapAndViewIcons.compass,
     ClapAndViewIcons.plus_circle,
     ClapAndViewIcons.user,
   ];
