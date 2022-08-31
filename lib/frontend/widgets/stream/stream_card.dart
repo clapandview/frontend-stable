@@ -61,7 +61,7 @@ class _StreamCardState extends State<StreamCard>
         Navigator.of(context).push(
           SlideRoute(
             page: WatchStreamPage(
-              id: widget.streamModel.id,
+              streamId: widget.streamModel.id,
               userId: (GetStorage().read('isLoggedIn'))
                   ? Provider.of<UserController>(context, listen: false)
                       .currentUser

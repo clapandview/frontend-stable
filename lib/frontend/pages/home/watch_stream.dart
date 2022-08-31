@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:clap_and_view/client/api/firebase_api.dart';
 import 'package:clap_and_view/client/controllers/session_controller.dart';
@@ -13,7 +11,6 @@ import 'package:clap_and_view/frontend/constants.dart';
 import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
 import 'package:clap_and_view/frontend/widgets/chat/chat_new_message.dart';
 import 'package:clap_and_view/frontend/widgets/chat/message_builder_for_stream.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,11 +25,11 @@ import 'package:uuid/uuid.dart';
 class WatchStreamPage extends StatefulWidget {
   const WatchStreamPage({
     Key? key,
-    required this.id,
+    required this.streamId,
     required this.userId,
   }) : super(key: key);
 
-  final String id;
+  final String streamId;
   final String userId;
 
   @override
@@ -45,18 +42,25 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
   bool _inStream = false;
   var uuid = const Uuid();
   var resId = "";
+  Group? group;
 
   @override
   initState() {
     super.initState();
     resId = uuid.v4();
     initRenderers();
+    initGroup();
     _connect();
   }
 
   initRenderers() async {
     await _localRenderer.initialize();
     await _remoteRenderer.initialize();
+  }
+
+  initGroup() async {
+    group = await FirebaseApi.getGroupByIdStream2(widget.streamId);
+    setState(() {});
   }
 
   @override
@@ -72,7 +76,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
       //host
       serverUrl,
       //streamID
-      widget.id,
+      widget.streamId,
       //roomID
       '',
       AntMediaType.Play,
@@ -161,144 +165,89 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
       child: Scaffold(
         backgroundColor: darkerGreyColor,
         body: SafeArea(
-          child: OrientationBuilder(builder: (context, orientation) {
-            return StreamBuilder<List<Group>>(
-              stream: FirebaseApi.getGroupByIdStream(widget.id),
-              builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  default:
-                    if (snapshot.hasError) {
-                      return buildText('Something Went Wrong Try later');
-                    } else {
-                      if (snapshot.hasData) {
-                        if (snapshot.data!.isNotEmpty) {
-                          Group group = snapshot.data![0];
-                          return Stack(
-                            children: [
-                              Positioned(
-                                left: 0.0,
-                                right: 0.0,
-                                top: 0.0,
-                                bottom: 0.0,
-                                child: Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  decoration:
-                                      BoxDecoration(color: darkGreyColor),
-                                  child: RTCVideoView(_remoteRenderer),
-                                ),
-                              ),
-                              Positioned.fill(child: GestureDetector(
-                                onTap: () {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                },
-                              )),
-                              Positioned(
-                                top: kMainSpacing,
-                                right: kMainSpacing,
-                                child: CustomCircleButton(
-                                  onTap: () {
-                                    Meta meta = Meta(
-                                        status: 1,
-                                        user_id: widget.userId,
-                                        stream_id: widget.id);
-                                    Session session = Session(
-                                        id: '',
-                                        ts: DateTime.now(),
-                                        metadata: meta,
-                                        revenue: 0.0);
-                                    Provider.of<SessionController>(context,
+            child: (group == null)
+                ? const Center(child: CircularProgressIndicator())
+                : Stack(
+                    children: [
+                      Positioned(
+                        left: 0.0,
+                        right: 0.0,
+                        top: 0.0,
+                        bottom: 0.0,
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          decoration: BoxDecoration(color: darkGreyColor),
+                          child: RTCVideoView(_remoteRenderer),
+                        ),
+                      ),
+                      Positioned.fill(child: GestureDetector(
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
+                      )),
+                      Positioned(
+                        top: kMainSpacing,
+                        right: kMainSpacing,
+                        child: CustomCircleButton(
+                          onTap: () {
+                            Meta meta = Meta(
+                                status: 1,
+                                user_id: widget.userId,
+                                stream_id: widget.streamId);
+                            Session session = Session(
+                                id: '',
+                                ts: DateTime.now(),
+                                metadata: meta,
+                                revenue: 0.0);
+                            Provider.of<SessionController>(context,
+                                    listen: false)
+                                .createOne(session);
+                            if (_inStream) {
+                              _finish();
+                            } else {
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          icon: ClapAndViewIcons.multiply,
+                          color: Colors.black.withOpacity(0.75),
+                          colorIcon: Colors.white,
+                        ),
+                      ),
+                      Positioned(
+                        left: kMainSpacing / 2,
+                        bottom: kMainSpacing / 2,
+                        height: 1.sh / 2.5,
+                        width: 1.sw / 1.5,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: MessageBuilderForStream(
+                                myIdUser: (GetStorage().read('isLoggedIn'))
+                                    ? Provider.of<UserController>(context,
                                             listen: false)
-                                        .createOne(session);
-                                    if (_inStream) {
-                                      _finish();
-                                    } else {
-                                      Navigator.of(context).pop();
-                                    }
-                                  },
-                                  icon: ClapAndViewIcons.multiply,
-                                  color: Colors.black.withOpacity(0.75),
-                                  colorIcon: Colors.white,
-                                ),
+                                        .currentUser
+                                        .id
+                                    : resId,
+                                group: group!,
                               ),
-                              Positioned(
-                                left: kMainSpacing / 2,
-                                bottom: kMainSpacing / 2,
-                                height: 1.sh / 2.5,
-                                width: 1.sw / 1.5,
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: MessageBuilderForStream(
-                                        myIdUser: (GetStorage().read('isLoggedIn'))
-                                            ? Provider.of<UserController>(
-                                                    context,
-                                                    listen: false)
-                                                .currentUser
-                                                .id
-                                            : resId,
-                                        group: group,
-                                      ),
-                                    ),
-                                    ChatNewMessage(
-                                      idUser: (GetStorage().read('isLoggedIn'))
-                                          ? Provider.of<UserController>(context,
-                                                  listen: false)
-                                              .currentUser
-                                              .id
-                                          : resId,
-                                      idGroup: group.id,
-                                      isStream: true,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        } else {
-                          FirebaseApi.createGroup(
-                            Group(
-                              id: "",
-                              id_creator: (GetStorage().read('isLoggedIn'))
+                            ),
+                            ChatNewMessage(
+                              idUser: (GetStorage().read('isLoggedIn'))
                                   ? Provider.of<UserController>(context,
                                           listen: false)
                                       .currentUser
                                       .id
                                   : resId,
-                              members_ids: [],
-                              last_message_text: "",
-                              members_count: 0,
-                              type: 2,
-                              name: "",
-                              stream_id: widget.id,
-                              modified_at: DateTime.now(),
-                              created_at: DateTime.now(),
-                            ),
-                          );
-                          return (Platform.isIOS)
-                              ? const CupertinoActivityIndicator(
-                                  color: Colors.white,
-                                )
-                              : const SizedBox(
-                                  height: kToolbarHeight / 2.0,
-                                  width: kToolbarHeight / 2.0,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2.0,
-                                  ),
-                                );
-                        }
-                      } else {
-                        return buildText("");
-                      }
-                    }
-                }
-              },
-            );
-          }),
-        ),
+                              idGroup: group!.id,
+                              isStream: true,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
       ),
     );
   }

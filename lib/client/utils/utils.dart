@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: depend_on_referenced_packages
@@ -34,5 +35,17 @@ class Utils {
     if (date == null) return null;
 
     return date.toUtc();
+  }
+
+  static List<dynamic> fromQuerySnapshotToObjects(
+      QuerySnapshot<Map<String, dynamic>> snapshot,
+      Function(Map<String, dynamic> json) fromJson) {
+    final snaps = snapshot.docs.map((doc) => doc.data()).toList();
+    snapshot.docs.forEachIndexed((index, doc) {
+      snaps[index]["id"] = doc.id;
+    });
+    final objects = snaps.map((json) => fromJson(json)).toList();
+
+    return objects;
   }
 }

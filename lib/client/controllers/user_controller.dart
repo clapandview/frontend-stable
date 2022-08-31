@@ -247,7 +247,7 @@ class UserController extends ChangeNotifier {
       current_users = usersData.map((d) => User.fromJson(d)).toList();
       // ignore: avoid_function_literals_in_foreach_calls
       current_users.forEach((user) {
-        map_users[user.id] = user;
+        map_users[user.streamId] = user;
       });
       notifyListeners();
     } catch (error) {

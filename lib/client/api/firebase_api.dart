@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:clap_and_view/client/models/group.dart';
 import 'package:clap_and_view/client/models/message.dart';
@@ -60,6 +61,18 @@ class FirebaseApi extends ChangeNotifier {
     return raw;
   }
 
+  static Future<dynamic> getGroupByIdStream2(String streamId) async {
+    var raw = await FirebaseFirestore.instance
+        .collection('group')
+        .where("stream_id", isEqualTo: streamId)
+        .get()
+        .then((value) {
+      return Utils.fromQuerySnapshotToObjects(value, Group.fromJson);
+    });
+    raw.cast<Group>();
+    return raw[0];
+  }
+
   static Future createGroup(Group group) async {
     final refMessages = FirebaseFirestore.instance.collection('group');
     await refMessages.add(group.toJson());
@@ -83,4 +96,7 @@ class FirebaseApi extends ChangeNotifier {
         .transform(Utils.transformer(Group.fromJson));
     return raw;
   }
+
+  static traformDocumentToGroup(
+      Future<QuerySnapshot<Map<String, dynamic>>> value) {}
 }
