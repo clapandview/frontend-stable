@@ -59,7 +59,7 @@ class _WatchStreamPageState extends State<WatchStreamPage> {
   }
 
   initGroup() async {
-    group = await FirebaseApi.getGroupByIdStream2(widget.streamId);
+    group = await FirebaseApi.getGroupByIdStream(widget.streamId);
     setState(() {});
   }
 

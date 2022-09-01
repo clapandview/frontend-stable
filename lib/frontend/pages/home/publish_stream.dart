@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:ant_media_flutter/ant_media_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clap_and_view/client/api/firebase_api.dart';
 import 'package:clap_and_view/client/controllers/session_controller.dart';
 import 'package:clap_and_view/client/controllers/stream_controller.dart';
 import 'package:clap_and_view/client/controllers/user_controller.dart';
@@ -16,11 +17,16 @@ import 'package:clap_and_view/frontend/widgets/buttons/circle_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:cron/cron.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+
+import '../../../client/models/group.dart';
+import '../../widgets/chat/chat_new_message.dart';
+import '../../widgets/chat/message_builder_for_stream.dart';
 
 class PublishStreamPage extends StatefulWidget {
   const PublishStreamPage({Key? key}) : super(key: key);
@@ -35,6 +41,7 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
   final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
   bool _micOn = true;
   final cron = Cron();
+  Group? group;
 
   @override
   initState() {
@@ -334,6 +341,8 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                         loading = !loading;
                       });
 
+                      createGroup();
+
                       if (isStreaming) {
                         Provider.of<BroadcastController>(context, listen: false)
                             .currentStream
@@ -391,11 +400,74 @@ class _PublishStreamPageState extends State<PublishStreamPage> {
                     loading: loading,
                   ),
                 ),
+                (isStreaming)
+                    ? (group == null)
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Positioned(
+                            left: kMainSpacing / 2,
+                            bottom: kMainSpacing / 2,
+                            height: 1.sh / 2.5,
+                            width: 1.sw / 1.5,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: MessageBuilderForStream(
+                                    myIdUser: Provider.of<UserController>(
+                                            context,
+                                            listen: false)
+                                        .currentUser
+                                        .id,
+                                    group: group!,
+                                  ),
+                                ),
+                                ChatNewMessage(
+                                  idUser: Provider.of<UserController>(context,
+                                          listen: false)
+                                      .currentUser
+                                      .id,
+                                  idGroup: group!.id,
+                                  isStream: true,
+                                )
+                              ],
+                            ),
+                          )
+                    : const Text("")
               ],
             ),
           );
         },
       ),
     );
+  }
+
+  createGroup() async {
+    var stream = await Provider.of<BroadcastController>(context, listen: false)
+        .getOneByUserId(
+            Provider.of<UserController>(context, listen: false).currentUser.id);
+
+    group = await FirebaseApi.getGroupByIdStream(stream.id);
+
+    if (group == null) {
+      FirebaseApi.createGroup(
+        Group(
+          id: "",
+          id_creator: Provider.of<UserController>(context, listen: false)
+              .currentUser
+              .id,
+          members_ids: [],
+          last_message_text: "",
+          members_count: 0,
+          type: 2,
+          name: "",
+          stream_id: stream.id,
+          modified_at: DateTime.now(),
+          created_at: DateTime.now(),
+        ),
+      );
+      group = await FirebaseApi.getGroupByIdStream(stream.id);
+    }
+    setState(() {});
   }
 }

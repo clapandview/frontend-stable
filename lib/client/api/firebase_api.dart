@@ -52,16 +52,8 @@ class FirebaseApi extends ChangeNotifier {
     return raw;
   }
 
-  static Stream<List<Group>> getGroupByIdStream(String streamId) {
-    var raw = FirebaseFirestore.instance
-        .collection('group')
-        .where("stream_id", isEqualTo: streamId)
-        .snapshots()
-        .transform(Utils.transformer(Group.fromJson));
-    return raw;
-  }
 
-  static Future<dynamic> getGroupByIdStream2(String streamId) async {
+  static Future<dynamic> getGroupByIdStream(String streamId) async {
     var raw = await FirebaseFirestore.instance
         .collection('group')
         .where("stream_id", isEqualTo: streamId)
@@ -70,6 +62,9 @@ class FirebaseApi extends ChangeNotifier {
       return Utils.fromQuerySnapshotToObjects(value, Group.fromJson);
     });
     raw.cast<Group>();
+    if (raw.isEmpty){
+      return null;
+    }
     return raw[0];
   }
 
